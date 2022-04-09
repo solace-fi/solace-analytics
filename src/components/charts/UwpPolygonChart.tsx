@@ -10,27 +10,30 @@ import {
   YAxis,
 } from "recharts";
 
-const UwpAurora: any = () => {
+const UwpPolygon: any = () => {
   const [data, setData] = useState([])
   const [isLoading, setLoading] = useState(false)
 
   // csv to json
   function reformatData(csv: any): any {
+    var now = Date.now() / 1000
+    var start = now - (60 * 60 * 24 * 90) // filter out data points > 3 months ago
     var rows = csv.split('\n')
     var output = []
     for(var i = 1; i < rows.length-1; ++i) {
       var row = rows[i].split(',')
+      var timestamp = row[1] - 0
+      if(timestamp < start) continue
       output.push({
         timestamp: row[1],
         dai: row[3]-0,
         usdc: row[4]-0,
         usdt: row[5]-0,
         frax: row[6]-0,
-        eth: ((row[7]-0)+(row[8]-0))*(row[14]-0),
-        wbtc: (row[9]-0)*(row[15]-0),
-        wnear: (row[10]-0)*(row[16]-0),
-        aurora: (row[11]-0)*(row[17]-0),
-        tlp: (row[12]-0)*(row[19]-0)
+        eth: (row[9]-0)*(row[13]-0),
+        wbtc: (row[10]-0)*(row[14]-0),
+        matic: ((row[7]-0)+(row[8]-0))*(row[15]-0),
+        guni: (row[11]-0)*(row[17]-0)
       })
     }
     return output
@@ -38,10 +41,11 @@ const UwpAurora: any = () => {
 
   useEffect(() => {
     setLoading(true)
-    fetch("https://stats.solace.fi/fs/?f=uwp_aurora.csv")
+    fetch("https://stats.solace.fi/fs/?f=uwp/polygon.csv")
     .then((data: any) => {
       return data.text()
     }).then((data: any) => {
+      //console.log(data)
       setData(reformatData(data))
       setLoading(false)
     })
@@ -77,15 +81,11 @@ const UwpAurora: any = () => {
           <stop offset="5%" stopColor="#fb748e" stopOpacity={0.8}/>
           <stop offset="95%" stopColor="#fb748e" stopOpacity={0}/>
         </linearGradient>
-        <linearGradient id="colorWnear" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="5%" stopColor="#000000" stopOpacity={0.8}/>
-          <stop offset="95%" stopColor="#000000" stopOpacity={0}/>
+        <linearGradient id="colorMatic" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="5%" stopColor="#8247e5" stopOpacity={0.8}/>
+          <stop offset="95%" stopColor="#8247e5" stopOpacity={0}/>
         </linearGradient>
-        <linearGradient id="colorAurora" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="5%" stopColor="#70d44b" stopOpacity={0.8}/>
-          <stop offset="95%" stopColor="#70d44b" stopOpacity={0}/>
-        </linearGradient>
-        <linearGradient id="colorTlp" x1="0" y1="0" x2="0" y2="1">
+        <linearGradient id="colorGuni" x1="0" y1="0" x2="0" y2="1">
           <stop offset="5%" stopColor="#7dc781" stopOpacity={0.8}/>
           <stop offset="95%" stopColor="#7dc781" stopOpacity={0}/>
         </linearGradient>
@@ -117,11 +117,10 @@ const UwpAurora: any = () => {
       <Area type="monotone" dataKey="frax" stroke="#89fb4d" fillOpacity={1} fill="url(#colorFrax)" stackId="1"/>
       <Area type="monotone" dataKey="eth" stroke="#89eacb" fillOpacity={1} fill="url(#colorEth)" stackId="1"/>
       <Area type="monotone" dataKey="wbtc" stroke="#fb748e" fillOpacity={1} fill="url(#colorWbtc)" stackId="1"/>
-      <Area type="monotone" dataKey="wnear" stroke="#000000" fillOpacity={1} fill="url(#colorWnear)" stackId="1"/>
-      <Area type="monotone" dataKey="aurora" stroke="#70d44b" fillOpacity={1} fill="url(#colorAurora)" stackId="1"/>
-      <Area type="monotone" dataKey="tlp" stroke="#7dc781" fillOpacity={1} fill="url(#colorTlp)" stackId="1"/>
+      <Area type="monotone" dataKey="matic" stroke="#8247e5" fillOpacity={1} fill="url(#colorMatic)" stackId="1"/>
+      <Area type="monotone" dataKey="guni" stroke="#7dc781" fillOpacity={1} fill="url(#colorGuni)" stackId="1"/>
     </AreaChart>
   )
 }
 
-export default UwpAurora
+export default UwpPolygon
