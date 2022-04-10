@@ -15,10 +15,10 @@ import {
 
 const VotePowerByAccountChart: any = (props) => {
 
-  const keys = Object.keys(props.data)
+  const keys = Object.keys(props.xslocker)
   if(keys.length == 0) return <p>Loading...</p>
 
-  let [chartData, tableData] = reformatData(props.data)
+  let [chartData, tableData] = reformatData(props.xslocker)
 
   return (
     <div>

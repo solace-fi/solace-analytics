@@ -15,14 +15,14 @@ import {
 
 const VotePowerOverTimeChart: any = (props) => {
 
-  const keys = Object.keys(props.data)
+  const keys = Object.keys(props.xslocker)
   if(keys.length == 0) return <p>Loading...</p>
 
   return (
     <LineChart
       width={730}
       height={250}
-      data={reformatData(props.data)}
+      data={reformatData(props.xslocker)}
       margin={{ top: 10, right: 30, left:30, bottom: 0 }}
     >
       <CartesianGrid strokeDasharray="3 3" />

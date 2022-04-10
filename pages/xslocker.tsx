@@ -5,22 +5,12 @@ import { useEffect, useState } from "react";
 import { ethers } from "ethers"
 const BN = ethers.BigNumber
 
-const XsLocker: NextPage = () => {
-  var empty: any = {}
-  const [data, setData] = useState(empty)
-
-  useEffect(() => {
-
-    fetch("https://stats.solace.fi/xsLocker/")
-    .then((data: any) => data.text())
-    .then((data: any) => JSON.parse(data))
-    .then((data: any) => setData(data))
-
-  }, [])
-
+const XsLocker: NextPage = (props: any) => {
+  if(!props || !props.xslocker || Object.keys(props.xslocker).length == 0) return <p>Loading</p>
+  const xslocker = props.xslocker
   return (
     <div className={styles.container}>
-      <XsLockerTable data={data}/>
+      <XsLockerTable xslocker={xslocker}/>
     </div>
   )
 }
@@ -35,10 +25,10 @@ const XsLockerTable: any = (props) => {
     '137': <a href="https://polygonscan.com/address/0x501Ace47c5b0C2099C4464f681c3fa2ECD3146C1"><h2>Polygon</h2></a>,
   }
 
-  const keys = Object.keys(props.data)
+  const keys = Object.keys(props.xslocker)
   if(keys.length == 0) return <p>Loading...</p>
 
-  const [sumAmountAllChains, tables] = tally(props.data)
+  const [sumAmountAllChains, tables] = tally(props.xslocker)
 
   return (
     <div>
