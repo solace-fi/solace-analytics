@@ -13,7 +13,7 @@ import {
   ResponsiveContainer
 } from "recharts";
 
-const VotePowerByAccountChart: any = (props) => {
+const VotePowerByAccountChart: any = (props: any) => {
 
   const keys = Object.keys(props.xslocker)
   if(keys.length == 0) return <p>Loading...</p>
@@ -29,7 +29,7 @@ const VotePowerByAccountChart: any = (props) => {
         <Pie
           dataKey="votePower"
           isAnimationActive={false}
-          data={chartData}
+          data={chartData as any[]}
           cx="50%"
           cy="50%"
           outerRadius={80}
@@ -43,18 +43,18 @@ const VotePowerByAccountChart: any = (props) => {
   )
 }
 
-function reformatData(data) {
+function reformatData(data: any) {
   let keys = Object.keys(data)
-  let owners = {}
+  let owners: any = {}
   let now = Math.floor(Date.now()/1000)
   keys.forEach(chainID => {
-    data[chainID].forEach(xslock => {
+    data[chainID].forEach((xslock: any) => {
       if(!owners.hasOwnProperty(xslock.owner)) owners[xslock.owner] = BN.from(0)
       owners[xslock.owner] = owners[xslock.owner].add(votePowerOfLock(xslock, now))
     })
   })
-  let ownerArr = Object.keys(owners).map(owner => {
-    return {name: owner, votePower: Math.floor(formatUnits(owners[owner],18)-0)}
+  let ownerArr: any[] = Object.keys(owners).map(owner => {
+    return {name: owner, votePower: parseInt(formatUnits(owners[owner],18))}
   })
   ownerArr.sort((a,b) => b.votePower - a.votePower)
 
@@ -70,14 +70,14 @@ function reformatData(data) {
   return [ownerArr, tableData2]
 }
 
-function formatAmount(n) {
+function formatAmount(n: any) {
   let s = n.toLocaleString()
   while(s.length < 12) s = ' ' + s
   return s
 }
 
 // given a lock and a timestamp, calculates the vote power of the lock at that time
-function votePowerOfLock(xslock, time) {
+function votePowerOfLock(xslock: any, time: any) {
   // The maximum duration of a lock in seconds.
   const MAX_LOCK_DURATION = 60 * 60 * 24 * 365 * 4; // 4 years
   // The vote power multiplier at max lock in bps.

@@ -13,7 +13,7 @@ import {
   ResponsiveContainer
 } from "recharts";
 
-const VotePowerOverTimeChart: any = (props) => {
+const VotePowerOverTimeChart: any = (props: any) => {
 
   const keys = Object.keys(props.xslocker)
   if(keys.length == 0) return <p>Loading...</p>
@@ -51,12 +51,12 @@ const VotePowerOverTimeChart: any = (props) => {
   )
 }
 
-function reformatData(data) {
+function reformatData(data: any) {
   // fetch timestamps
-  let timestamps1 = []
+  let timestamps1: any[] = []
   const keys = Object.keys(data)
   keys.forEach(key => {
-    data[key].forEach(xslock => {
+    data[key].forEach((xslock: any) => {
       timestamps1.push(BN.from(xslock.end).toNumber())
     })
   })
@@ -71,18 +71,18 @@ function reformatData(data) {
 }
 
 // given a set of locks and a timestamp, calculates the vote power of the locks at that time
-function votePowerOfLocks(data, time) {
+function votePowerOfLocks(data: any, time: any) {
   let sum = BN.from(0)
   Object.keys(data).forEach(key => {
-    data[key].forEach(xslock => {
+    data[key].forEach((xslock: any) => {
       sum = sum.add(votePowerOfLock(xslock, time))
     })
   })
-  return {timestamp: time, votePower: formatUnits(sum,18)-0}
+  return {timestamp: time, votePower: parseFloat(formatUnits(sum,18))}
 }
 
 // given a lock and a timestamp, calculates the vote power of the lock at that time
-function votePowerOfLock(xslock, time) {
+function votePowerOfLock(xslock: any, time: any) {
   // The maximum duration of a lock in seconds.
   const MAX_LOCK_DURATION = 60 * 60 * 24 * 365 * 4; // 4 years
   // The vote power multiplier at max lock in bps.

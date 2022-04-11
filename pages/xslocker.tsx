@@ -17,9 +17,9 @@ const XsLocker: NextPage = (props: any) => {
 
 export default XsLocker
 
-const XsLockerTable: any = (props) => {
+const XsLockerTable: any = (props: any) => {
   const CHAIN_IDS = [1,1313161554,137] // mainnet, aurora, polygon
-  const CHAIN_NAMES = {
+  const CHAIN_NAMES: any = {
     '1': <a href="https://etherscan.io/address/0x501Ace47c5b0C2099C4464f681c3fa2ECD3146C1"><h2>Ethereum</h2></a>,
     '1313161554': <a href="https://aurorascan.dev/address/0x501Ace47c5b0C2099C4464f681c3fa2ECD3146C1"><h2>Aurora</h2></a>,
     '137': <a href="https://polygonscan.com/address/0x501Ace47c5b0C2099C4464f681c3fa2ECD3146C1"><h2>Polygon</h2></a>,
@@ -43,17 +43,17 @@ const XsLockerTable: any = (props) => {
   )
 }
 
-const tally: any = (data) => {
+const tally: any = (data: any) => {
   let sumAmountAllChains = BN.from(0)
-  let tables = {}
+  let tables: any = {}
   const keys = Object.keys(data)
   keys.forEach(key => {
     let sumAmountChain = BN.from(0)
     let s = '        id:       SOLACE | Expiration\n--------------------------------------\n'
-    data[key].forEach(xslock => {
+    data[key].forEach((xslock: any) => {
       sumAmountChain = sumAmountChain.add(xslock.amount)
       sumAmountAllChains = sumAmountAllChains.add(xslock.amount)
-      s = `${s}${formatNumber(xslock.xsLockID)}: ${formatAmount(xslock.amount, 18)} | ${formatEnd(xslock.end)}\n`
+      s = `${s}${formatNumber(xslock.xslockID)}: ${formatAmount(xslock.amount, 18)} | ${formatEnd(xslock.end)}\n`
     })
     s = `${s}--------------------------------------\n     total: ${formatAmount(sumAmountChain, 18)}\n`
     tables[key] = <pre>{s}</pre>
@@ -61,13 +61,13 @@ const tally: any = (data) => {
   return [sumAmountAllChains, tables]
 }
 
-function formatNumber(n) {
+function formatNumber(n: any) {
   var s = BN.from(n).toString();
   while(s.length < 10) s = ' ' + s;
   return s;
 }
 
-function formatAmount(amount, decimals) {
+function formatAmount(amount: any, decimals: any) {
   var d = BN.from(1);
   for(var i = 0; i < decimals; ++i) d = d.mul(10);
   var s = BN.from(amount).div(d).toNumber().toLocaleString();
@@ -75,7 +75,7 @@ function formatAmount(amount, decimals) {
   return s;
 }
 
-function formatEnd(end) {
+function formatEnd(end: any) {
   var d = Date.now();
   var e = BN.from(end).toNumber()*1000;
   if(d >= e) return "0";

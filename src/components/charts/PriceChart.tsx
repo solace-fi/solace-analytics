@@ -10,7 +10,7 @@ import {
   ResponsiveContainer
 } from "recharts";
 
-const Price: any = (props) => {
+const Price: any = (props: any) => {
   let dataPerChain: any = {}
   dataPerChain["mainnet"] = reformatData(props.markets["1"], "mainnet")
   dataPerChain["aurora"] = reformatData(props.markets["1313161554"], "aurora")
@@ -60,7 +60,7 @@ const Price: any = (props) => {
     }
     return output
   }
-  
+
   function zerosDict(keys: string[]) {
     var d: any = {}
     keys.forEach((key: string) => d[key] = 0);

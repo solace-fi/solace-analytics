@@ -9,7 +9,7 @@ import {
   YAxis,
 } from "recharts";
 
-const UwpMainnet: any = (props) => {
+const UwpMainnet: any = (props: any) => {
 
   // csv to json
   function reformatData(csv: any): any {

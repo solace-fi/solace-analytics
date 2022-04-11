@@ -9,7 +9,7 @@ import {
   YAxis,
 } from "recharts";
 
-const UwpPolygon: any = (props) => {
+const UwpPolygon: any = (props: any) => {
 
   // csv to json
   function reformatData(csv: any): any {
