@@ -6,33 +6,22 @@ import { useEffect, useState } from "react";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const emptyDict: any = {}
-  const [markets, setMarkets] = useState(emptyDict)
-  const [uwp, setUwp] = useState(emptyDict)
-  const [xslocker, setXslocker] = useState(emptyDict)
+  const [data, setData] = useState(emptyDict)
 
   useEffect(() => {
-
-    fetch("https://stats.solace.fi/fs?f=markets/all.json")
+    fetch("https://stats.solace.fi/analytics/")
     .then((data: any) => data.text())
     .then((data: any) => JSON.parse(data))
-    .then((data: any) => setMarkets(data))
-
-    fetch("https://stats.solace.fi/fs?f=uwp/all.json")
-    .then((data: any) => data.text())
-    .then((data: any) => JSON.parse(data))
-    .then((data: any) => setUwp(data))
-
-    fetch("https://stats.solace.fi/xsLocker/")
-    .then((data: any) => data.text())
-    .then((data: any) => JSON.parse(data))
-    .then((data: any) => setXslocker(data))
+    .then((data: any) => {
+      setData(data)
+    })
 
   }, [])
 
   return (<>
     <AnalyticsHead/>
     <AnalyticsNavbar/>
-    <Component {...pageProps} markets={markets} uwp={uwp} xslocker={xslocker} />
+    <Component {...pageProps} markets={data.markets} uwp={data.uwp} xslocker={data.xslocker} />
   </>)
 }
 
