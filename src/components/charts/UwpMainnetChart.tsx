@@ -1,5 +1,4 @@
 import { format } from "date-fns";
-import { useEffect, useState } from "react";
 
 import {
   Area,
@@ -10,9 +9,7 @@ import {
   YAxis,
 } from "recharts";
 
-const UwpMainnet: any = () => {
-  const [data, setData] = useState([])
-  const [isLoading, setLoading] = useState(false)
+const UwpMainnet: any = (props: any) => {
 
   // csv to json
   function reformatData(csv: any): any {
@@ -38,22 +35,8 @@ const UwpMainnet: any = () => {
     return output
   }
 
-  useEffect(() => {
-    setLoading(true)
-    fetch("https://stats.solace.fi/fs/?f=uwp/mainnet.csv")
-    .then((data: any) => {
-      return data.text()
-    }).then((data: any) => {
-      //console.log(data)
-      setData(reformatData(data))
-      setLoading(false)
-    })
-  }, [])
-
-  if(isLoading) return <p>Loading...</p>
-
   return (
-    <AreaChart width={730} height={250} data={data}
+    <AreaChart width={730} height={250} data={reformatData(props.csv)}
       margin={{ top: 10, right: 30, left:30, bottom: 0 }}>
       <defs>
         <linearGradient id="colorDai" x1="0" y1="0" x2="0" y2="1">
