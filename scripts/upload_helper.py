@@ -12,8 +12,6 @@ keys = filter(lambda key: len(key) > 5 and key[-5:] == '.html', keys)
 # process
 for key in keys:
     newkey = key[:-5]
-    print('move  : s3://{}/{} to s3://{}/{}'.format(bucket, key, bucket, newkey))
+    print('copy  : s3://{}/{} to s3://{}/{}'.format(bucket, key, bucket, newkey))
     # copy. will throw an exception if it fails - let it
     s3.Object(bucket, newkey).copy_from(CopySource='{}/{}'.format(bucket, key))
-    # delete. will silently fail if no key found
-    s3.Object(bucket, key).delete()
