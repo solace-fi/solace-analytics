@@ -1,13 +1,14 @@
 import type { NextPage } from 'next'
 import styles from '../styles/Home.module.css'
 
+import Loading from "./../src/components/Loading"
 import PriceChart from "./../src/components/charts/PriceChart"
 import SolaceUsdSwapAmountSimulatorChart from "./../src/components/charts/SolaceUsdSwapAmountSimulatorChart"
 import SolaceUsdSwapPriceUsdSimulatorChart from "./../src/components/charts/SolaceUsdSwapPriceUsdSimulatorChart"
 import SolaceUsdSwapPriceSolaceSimulatorChart from "./../src/components/charts/SolaceUsdSwapPriceSolaceSimulatorChart"
 
 const Markets: NextPage = (props: any) => {
-  if(!props || !props.markets || Object.keys(props.markets).length == 0) return <p>Loading</p>
+  if(!props || !props.markets || Object.keys(props.markets).length == 0) return <Loading/>
   const markets = props.markets
   return (
     <div className={styles.container}>

@@ -5,8 +5,10 @@ import { useEffect, useState } from "react";
 import { ethers } from "ethers"
 const BN = ethers.BigNumber
 
+import Loading from "./../src/components/Loading"
+
 const XsLocker: NextPage = (props: any) => {
-  if(!props || !props.xslocker || Object.keys(props.xslocker).length == 0) return <p>Loading</p>
+  if(!props || !props.xslocker || Object.keys(props.xslocker).length == 0) return <Loading/>
   const xslocker = props.xslocker
   return (
     <div className={styles.container}>
