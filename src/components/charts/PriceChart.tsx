@@ -10,7 +10,10 @@ import {
   ResponsiveContainer
 } from "recharts";
 
+import { formatCurrency, tooltipFormatterCurrency, tooltipLabelFormatterTime, range, leftPad, calculateWeeklyTicks, xtickLabelFormatter } from "./../../helpers/index"
+
 const Price: any = (props: any) => {
+  // transform data
   let dataPerChain: any = {}
   dataPerChain["mainnet"] = reformatData(props.markets["1"], "mainnet")
   dataPerChain["aurora"] = reformatData(props.markets["1313161554"], "aurora")
@@ -47,15 +50,31 @@ const Price: any = (props: any) => {
   let start = now - (60 * 60 * 24 * 90) // filter out data points > 3 months ago
   newData = newData.filter(row => row.timestamp >= start)
 
+  // calculate y ticks
+  let max = 0
+  var keys2 = ["mainnet", "aurora", "polygon"]
+  for(var d of newData) {
+    for(var k of keys2) {
+      var v = parseFloat(d[k]+"")
+      if(v > max) max = v
+    }
+  }
+  max = Math.ceil(max*50)/50
+  let yticks = range(0, max+0.0001, 0.02)
+  //let yticks = range(0.04, 0.0501, 0.001)
+
+  let history = newData
+  let xticks = calculateWeeklyTicks(history[0].timestamp, history[history.length-1].timestamp)
+
   // csv to json
   function reformatData(csv: any, key: string): any {
-    let rows = csv.split('\n')
+    let rows = csv.trim().split('\n')
     let output = []
-    for(let i = 1; i < rows.length-1; ++i) {
+    for(let i = 1; i < rows.length; ++i) {
       let row = rows[i].split(',')
       output.push({
-        timestamp: row[1],
-        [key]: row[3]-0
+        timestamp: parseInt(row[1]),
+        [key]: row[3]
       })
     }
     return output
@@ -69,37 +88,40 @@ const Price: any = (props: any) => {
 
   return (
     <LineChart
-      width={730}
-      height={250}
+      width={1200}
+      height={500}
       data={newData}
       margin={{ top: 10, right: 30, left:30, bottom: 0 }}
     >
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis
         dataKey="timestamp"
-        interval={90}
-        axisLine={false}
-        tickLine={false}
-        tickFormatter={str => format(new Date(str * 1000), "MMM dd")}
+        scale="time"
+        type="number"
+        domain={['auto','auto']}
+
+        ticks={xticks}
+        tickFormatter={xtickLabelFormatter}
       />
       <YAxis
-        axisLine={false}
-        tickLine={false}
-        tickFormatter={number =>
-          number !== 0
-            ? `$${parseFloat(number).toLocaleString()}`
-            : "0"
-        }
-        domain={[0, "auto"]}
-        dx={3}
+        tickFormatter={formatCurrency({decimals:3})}
+        scale="linear"
+        type="number"
+        ticks={yticks}
         allowDataOverflow={false}
       />
-      <Tooltip />
+      <Tooltip formatter={tooltipFormatterCurrency({decimals:5})} labelFormatter={tooltipLabelFormatterTime}/>
       <Line type="monotone" dataKey="mainnet" stroke="#000000" dot={false} strokeWidth={1}/>
       <Line type="monotone" dataKey="aurora" stroke="#70d44b" dot={false} strokeWidth={1}/>
       <Line type="monotone" dataKey="polygon" stroke="#8247e5" dot={false} strokeWidth={1}/>
     </LineChart>
   )
+}
+
+//content={renderTooltip}
+function renderTooltip(args: any){
+  console.log(args)
+  return args
 }
 
 export default Price

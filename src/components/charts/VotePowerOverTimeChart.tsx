@@ -13,39 +13,38 @@ import {
   ResponsiveContainer
 } from "recharts";
 
+import { formatNumber, tooltipFormatterNumber, tooltipLabelFormatterTime, xtickLabelFormatterWithYear, calculateYearlyTicks } from "./../../helpers/index"
+
 const VotePowerOverTimeChart: any = (props: any) => {
 
   const keys = Object.keys(props.xslocker)
   if(keys.length == 0) return <p>Loading...</p>
 
+  let history = reformatData(props.xslocker)
+  let xticks = calculateYearlyTicks(history[0].timestamp, history[history.length-1].timestamp)
+
   return (
     <LineChart
-      width={730}
+      width={1200}
       height={250}
-      data={reformatData(props.xslocker)}
-      margin={{ top: 10, right: 30, left:30, bottom: 0 }}
+      data={history}
+      margin={{ top: 10, right: 50, left:30, bottom: 0 }}
     >
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis
         dataKey="timestamp"
-        interval={90}
-        axisLine={false}
-        tickLine={false}
-        tickFormatter={str => format(new Date(str * 1000), "MMM dd yyyy")}
+        scale="time"
+        type="number"
+        domain={['auto','auto']}
+        ticks={xticks}
+        tickFormatter={xtickLabelFormatterWithYear}
       />
       <YAxis
-        axisLine={false}
-        tickLine={false}
-        tickFormatter={number =>
-          number !== 0
-            ? `${parseFloat(number).toLocaleString()}`
-            : "0"
-        }
+        tickFormatter={formatNumber({decimals:0})}
         domain={[0, "auto"]}
-        dx={3}
         allowDataOverflow={false}
       />
-      <Tooltip />
+      <Tooltip labelFormatter={tooltipLabelFormatterTime}/>
       <Line type="monotone" dataKey="votePower" stroke="#000000" dot={false} strokeWidth={1}/>
     </LineChart>
   )

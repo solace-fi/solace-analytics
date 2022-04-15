@@ -24,6 +24,9 @@ const SolaceUsdSwapPriceUsdSimulatorChart: any = (props: any) => {
       <ReferenceLine y={props.price} stroke="black" />
       <XAxis
         dataKey="usd"
+        scale="time"
+        type="number"
+        domain={['auto','auto']}
         axisLine={false}
         tickLine={false}
         tickFormatter={number =>
