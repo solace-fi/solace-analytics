@@ -5,6 +5,7 @@ const AnalyticsNavbar: any = () => {
     <div className="navbar">
       <Link href="/"><a>Home</a></Link>
       <Link href="/markets"><a>Markets</a></Link>
+      <Link href="/policies"><a>Policies</a></Link>
       <Link href="/uwp"><a>UWP</a></Link>
       <Link href="/xslocker"><a>xsLocker</a></Link>
       <Link href="/votePower"><a>Vote Power</a></Link>
