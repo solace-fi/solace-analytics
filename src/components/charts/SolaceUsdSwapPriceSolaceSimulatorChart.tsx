@@ -16,7 +16,7 @@ const SolaceUsdSwapPriceSolaceSimulatorChart: any = (props: any) => {
     <LineChart
       width={730}
       height={250}
-      data={props.priceBySolace.filter((x: any) => x.price < 1.20)}
+      data={props.priceBySolace.filter((x: any) => x.price < 1.20 && x.solace < 20000000)}
       margin={{ top: 10, right: 30, left:30, bottom: 0 }}
     >
       <CartesianGrid strokeDasharray="3 3" />
@@ -24,6 +24,9 @@ const SolaceUsdSwapPriceSolaceSimulatorChart: any = (props: any) => {
       <ReferenceLine y={props.price} stroke="black" />
       <XAxis
         dataKey="solace"
+        scale="time"
+        type="number"
+        domain={['auto','auto']}
         axisLine={false}
         tickLine={false}
         tickFormatter={number =>

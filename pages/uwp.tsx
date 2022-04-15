@@ -2,9 +2,9 @@ import type { NextPage } from 'next'
 import styles from '../styles/Home.module.css'
 
 import Loading from "./../src/components/Loading"
-import UwpMainnetChart from "./../src/components/charts/UwpMainnetChart"
-import UwpAuroraChart from "./../src/components/charts/UwpAuroraChart"
-import UwpPolygonChart from "./../src/components/charts/UwpPolygonChart"
+import UwpMainnetChart from "./../src/components/charts/uwp/UwpMainnetChart"
+import UwpAuroraChart from "./../src/components/charts/uwp/UwpAuroraChart"
+import UwpPolygonChart from "./../src/components/charts/uwp/UwpPolygonChart"
 
 const Uwp: NextPage = (props: any) => {
   if(!props || !props.uwp || Object.keys(props.uwp).length == 0) return <Loading/>

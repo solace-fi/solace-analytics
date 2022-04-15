@@ -9,7 +9,9 @@ import {
   YAxis,
 } from "recharts";
 
-const UwpAurora: any = (props: any) => {
+import { formatCurrency, tooltipFormatterCurrency, tooltipLabelFormatterTime, calculateWeeklyTicks, xtickLabelFormatter } from "./../../../helpers/index"
+
+const UwpPolygon: any = (props: any) => {
 
   // csv to json
   function reformatData(csv: any): any {
@@ -27,18 +29,20 @@ const UwpAurora: any = (props: any) => {
         usdc: row[4]-0,
         usdt: row[5]-0,
         frax: row[6]-0,
-        eth: ((row[7]-0)+(row[8]-0))*(row[14]-0),
-        wbtc: (row[9]-0)*(row[15]-0),
-        wnear: (row[10]-0)*(row[16]-0),
-        aurora: (row[11]-0)*(row[17]-0),
-        tlp: (row[12]-0)*(row[19]-0)
+        eth: (row[9]-0)*(row[13]-0),
+        wbtc: (row[10]-0)*(row[14]-0),
+        matic: ((row[7]-0)+(row[8]-0))*(row[15]-0),
+        guni: (row[11]-0)*(row[17]-0)
       })
     }
     return output
   }
 
+  let history = reformatData(props.csv)
+  let xticks = calculateWeeklyTicks(history[0].timestamp, history[history.length-1].timestamp)
+
   return (
-    <AreaChart width={730} height={250} data={reformatData(props.csv)}
+    <AreaChart width={1200} height={250} data={history}
       margin={{ top: 10, right: 30, left:30, bottom: 0 }}>
       <defs>
         <linearGradient id="colorDai" x1="0" y1="0" x2="0" y2="1">
@@ -65,51 +69,40 @@ const UwpAurora: any = (props: any) => {
           <stop offset="5%" stopColor="#fb748e" stopOpacity={0.8}/>
           <stop offset="95%" stopColor="#fb748e" stopOpacity={0}/>
         </linearGradient>
-        <linearGradient id="colorWnear" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="5%" stopColor="#000000" stopOpacity={0.8}/>
-          <stop offset="95%" stopColor="#000000" stopOpacity={0}/>
+        <linearGradient id="colorMatic" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="5%" stopColor="#8247e5" stopOpacity={0.8}/>
+          <stop offset="95%" stopColor="#8247e5" stopOpacity={0}/>
         </linearGradient>
-        <linearGradient id="colorAurora" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="5%" stopColor="#70d44b" stopOpacity={0.8}/>
-          <stop offset="95%" stopColor="#70d44b" stopOpacity={0}/>
-        </linearGradient>
-        <linearGradient id="colorTlp" x1="0" y1="0" x2="0" y2="1">
+        <linearGradient id="colorGuni" x1="0" y1="0" x2="0" y2="1">
           <stop offset="5%" stopColor="#7dc781" stopOpacity={0.8}/>
           <stop offset="95%" stopColor="#7dc781" stopOpacity={0}/>
         </linearGradient>
       </defs>
       <XAxis
         dataKey="timestamp"
-        interval={90}
-        axisLine={false}
-        tickLine={false}
-        tickFormatter={str => format(new Date(str * 1000), "MMM dd")}
+        scale="time"
+        type="number"
+        domain={['auto','auto']}
+        ticks={xticks}
+        tickFormatter={xtickLabelFormatter}
       />
       <YAxis
-        axisLine={false}
-        tickLine={false}
-        tickFormatter={number =>
-          number !== 0
-            ? `$${parseFloat(number).toLocaleString()}`
-            : "0"
-        }
+        tickFormatter={formatCurrency({decimals:0})}
         domain={[0, "auto"]}
-        dx={3}
         allowDataOverflow={false}
       />
       <CartesianGrid strokeDasharray="3 3" />
-      <Tooltip />
+      <Tooltip formatter={tooltipFormatterCurrency({decimals:0})} labelFormatter={tooltipLabelFormatterTime}/>
       <Area type="monotone" dataKey="dai" stroke="#f2aa36" fillOpacity={1} fill="url(#colorDai)" stackId="1"/>
       <Area type="monotone" dataKey="usdc" stroke="#748198" fillOpacity={1} fill="url(#colorUsdc)" stackId="1"/>
       <Area type="monotone" dataKey="usdt" stroke="#d630e4" fillOpacity={1} fill="url(#colorUsdt)" stackId="1"/>
       <Area type="monotone" dataKey="frax" stroke="#89fb4d" fillOpacity={1} fill="url(#colorFrax)" stackId="1"/>
       <Area type="monotone" dataKey="eth" stroke="#89eacb" fillOpacity={1} fill="url(#colorEth)" stackId="1"/>
       <Area type="monotone" dataKey="wbtc" stroke="#fb748e" fillOpacity={1} fill="url(#colorWbtc)" stackId="1"/>
-      <Area type="monotone" dataKey="wnear" stroke="#000000" fillOpacity={1} fill="url(#colorWnear)" stackId="1"/>
-      <Area type="monotone" dataKey="aurora" stroke="#70d44b" fillOpacity={1} fill="url(#colorAurora)" stackId="1"/>
-      <Area type="monotone" dataKey="tlp" stroke="#7dc781" fillOpacity={1} fill="url(#colorTlp)" stackId="1"/>
+      <Area type="monotone" dataKey="matic" stroke="#8247e5" fillOpacity={1} fill="url(#colorMatic)" stackId="1"/>
+      <Area type="monotone" dataKey="guni" stroke="#7dc781" fillOpacity={1} fill="url(#colorGuni)" stackId="1"/>
     </AreaChart>
   )
 }
 
-export default UwpAurora
+export default UwpPolygon
