@@ -21,7 +21,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (<>
     <AnalyticsHead/>
     <AnalyticsNavbar/>
-    <Component {...pageProps} markets={data.markets} uwp={data.uwp} xslocker={data.xslocker} />
+    <Component {...pageProps} {...data}/>
   </>)
 }
 
