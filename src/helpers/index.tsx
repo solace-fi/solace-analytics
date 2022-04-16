@@ -111,20 +111,20 @@ export function formatTimestamp(timestamp:number) {
   return `${d.getUTCMonth()+1}/${d.getUTCDate()}/${d.getUTCFullYear()} ${leftPad(d.getUTCHours(),2,'0')}:${leftPad(d.getUTCMinutes(),2,'0')}:${leftPad(d.getUTCSeconds(),2,'0')}`
 }
 
-export function leftPad(s:any, l:number, f:string) {
+export function leftPad(s:any, l:number, f:string=' ') {
   let s2 = `${s}`
   while(s2.length < l) s2 = `${f}${s2}`
   return s2
 }
 
-export function rightPad(s:any, l:number, f:string) {
+export function rightPad(s:any, l:number, f:string=' ') {
   let s2 = `${s}`
   while(s2.length < l) s2 = `${s2}${f}`
   return s2
 }
 
 // note: only supports positive step
-export function range(start: number, stop: number, step: number) {
+export function range(start: number, stop: number, step: number=1) {
   let arr = []
   for(let i = start; i < stop; i += step) arr.push(i)
   return arr
@@ -187,4 +187,10 @@ export function xtickLabelFormatterWithYear(str:any) {
   var year = d.getUTCFullYear()
   var res = `${month} ${day} ${year}`
   return res
+}
+
+export function createLine(length: number, fill: string = '-') {
+  var s = ''
+  while(s.length < length) s = `${s}${fill}`
+  return s
 }
