@@ -50,7 +50,7 @@ function toFloat(swc: any) {
 }
 
 const PolicyTable: any = (props: any) => {
-  var s = "policyID | policyholder                               | coverLimit |depositsMade| premiumsCharged | referralsEarned\n------------------------------------------------------------------------------------------------------\n"
+  var s = "policyID | policyholder                               | coverLimit |depositsMade| premiumsCharged | referralsEarned\n-------------------------------------------------------------------------------------------------------------------\n"
   var fn = formatNumber({ decimals: 0 })
   props.policies.forEach((policy: any) => {
     var policyID = leftPad(policy.policyID, 8, ' ')
