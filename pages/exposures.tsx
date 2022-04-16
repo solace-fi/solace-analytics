@@ -16,7 +16,7 @@ const Exposures: NextPage = (props: any) => {
   protocols = protocols.filter(protocol => networks.includes(protocol.network))
   return (
     <div className={styles.container}>
-      <h3>SWC Exposures</h3>
+      <h3>SWC Exposures by Protocol</h3>
       <p>Note: positions are cached and may not reflect current state</p>
       <ExposuresTable protocols={protocols}/>
       <br/><br/><br/><br/>
@@ -48,6 +48,8 @@ function aggregateProtocols(swc:any, positions:any) {
   console.log(swc)
   console.log(positions)
   // fetch policyholders and policies
+  // if the account has multiple policies across chains or products
+  // then the last one to be written to the policyOf mapping will be used
   var policyOf: any = {} // map account -> policy
   swc.swcv1.policies.forEach((policy:any) => {
     policy.product = "swcv1"
@@ -59,20 +61,7 @@ function aggregateProtocols(swc:any, positions:any) {
     policy.network = "polygon"
     policyOf[policy.policyholder] = policy
   })
-  /*
-  // if the account has multiple policies across chains or products, the last one to be written to the policyOf mapping will be used
-  var policyholdersv1: string[] = swc.swcv1.policies.map((policy:any) => {
-    policyOf[policy.policyholder] = policy
-    return policy.policyholder
-  })
-  var policyholdersv2: string[] = swc.swcv2.policies.map((policy:any) => {
-    policyOf[policy.policyholder] = policy
-    return policy.policyholder
-  })
-  var policyholders: string[] = Array.from(new Set(policyholdersv1.concat(policyholdersv2))).sort()
-  */
   var policyholders: string[] = Object.keys(policyOf)
-
 
   // aggregate by protocol
   var protocols: any[] = []
@@ -107,7 +96,7 @@ function aggregateProtocols(swc:any, positions:any) {
       protocol.coverLimit += coverLimit
       protocol.totalLossPayoutAmount += Math.min(coverLimit, balanceUSD)
       protocol.policies.push(policy)
-      protocol.positions.push(pos)
+      protocol.positions.push(p)
     })
   })
   protocols.sort((a:any,b:any)=>b.balanceUSD-a.balanceUSD)
