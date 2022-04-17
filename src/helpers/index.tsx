@@ -38,8 +38,7 @@ export function formatNumber(params: any) {
     var str = `${parseInt(n).toLocaleString()}`
     if(!params || !params.decimals || params.decimals <= 0) return str
     var i = n.indexOf(".")
-    if(i == -1) return str
-    var str2 = n.substring(i+1)
+    var str2 = (i == -1) ? '' : n.substring(i+1)
     str2 = rightPad(str2.substring(0,params.decimals), params.decimals, '0')
     str = `${str}.${str2}`
     return str
