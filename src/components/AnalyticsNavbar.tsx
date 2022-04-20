@@ -1,18 +1,53 @@
-import Link from 'next/link'
+/* eslint-disable @next/next/no-img-element */
+import Link from "next/link";
+import { useRouter } from "next/router";
+import classNames from "classnames";
 
-const AnalyticsNavbar: any = () => {
+function NavbarLink({ href, children }: { href: string; children: string }) {
+  const router = useRouter();
+  const isActive = router.pathname === href;
   return (
-    <div className="navbar">
-      <Link href="/"><a>Home</a></Link>
-      <Link href="/markets"><a>Markets</a></Link>
-      <Link href="/policies"><a>Policies</a></Link>
-      <Link href="/exposures"><a>Exposures</a></Link>
-      <Link href="/uwp"><a>UWP</a></Link>
-      <Link href="/xslocker"><a>xsLocker</a></Link>
-      <Link href="/votePower"><a>Vote Power</a></Link>
-      <Link href="/community"><a>Community</a></Link>
-    </div>
-  )
+    <Link href={href}>
+      <a
+        className={classNames(
+          "px-10 py-2.5",
+          {
+            "bg-blue cursor-default": isActive,
+          },
+          {
+            "hover:bg-bg-darkRaised hover:brightness-110": !isActive,
+          }
+        )}
+      >
+        {children}
+      </a>
+    </Link>
+  );
 }
 
-export default AnalyticsNavbar
+const AnalyticsNavbar: any = () => {
+  const router = useRouter();
+  return (
+    <div className="fixed flex flex-col top-0 left-0 gap-5 bg-bg-darkRaised h-screen font-body select-none">
+      <Link href="/" passHref>
+        <a>
+          <img
+            src="/svg/solace-logo-rainbow.svg"
+            alt="Solace Logo"
+            className="mx-5 w-36 my-5"
+          />
+        </a>
+      </Link>
+      <NavbarLink href="/">Home</NavbarLink>
+      <NavbarLink href="/markets">Markets</NavbarLink>
+      <NavbarLink href="/policies">Policies</NavbarLink>
+      <NavbarLink href="/exposures">Exposures</NavbarLink>
+      <NavbarLink href="/uwp">UWP</NavbarLink>
+      <NavbarLink href="/xslocker">xsLocker</NavbarLink>
+      <NavbarLink href="/votePower">Vote Power</NavbarLink>
+      <NavbarLink href="/community">Community</NavbarLink>
+    </div>
+  );
+};
+
+export default AnalyticsNavbar;
