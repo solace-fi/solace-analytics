@@ -4,6 +4,7 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import classNames from "classnames";
 import SectionTitle from "../src/components/atoms/SectionTitle";
+import ExternalLinkButton from "@components/atoms/ExternalLinkButton";
 
 const Home: NextPage = () => {
   return (
@@ -28,34 +29,46 @@ const Home: NextPage = () => {
           or try the external links below.
         </p>
         <div className="flex flex-wrap max-w-2xl gap-5">
-          {externalLink(
+          {ExternalLinkButton(
             "CoinGecko",
             "https://www.coingecko.com/en/coins/solace"
           )}
-          {externalLink(
+          {ExternalLinkButton(
             "CoinMarketcap",
             "https://coinmarketcap.com/currencies/solace/"
           )}
-          {externalLink(
+          {ExternalLinkButton(
             "DappRadar",
             "https://dappradar.com/ethereum/defi/solace-protocol"
           )}
-          {externalLink("Defi Llama", "https://defillama.com/protocol/solace")}
-          {externalLink(
+          {ExternalLinkButton("Defi Llama", "https://defillama.com/protocol/solace")}
+          {ExternalLinkButton(
             "Sushiswap",
             "https://analytics.sushi.com/tokens/0x501acE9c35E60f03A2af4d484f49F9B1EFde9f40"
           )}
-          {externalLink(
+          {ExternalLinkButton(
             "Uniswap",
             "https://info.uniswap.org/#/polygon/tokens/0x501acE9c35E60f03A2af4d484f49F9B1EFde9f40"
           )}
-          {externalLink(
+          {ExternalLinkButton(
             "G-UNI",
             "https://www.sorbet.finance/#/pools/0x38e7e05Dfd9fa3dE80dB0e7AC03AC57Fa832C78A"
           )}
-          {externalLink(
+          {ExternalLinkButton(
             "GYSR",
             "https://app.gysr.io/pool/0xf54f26ec9657664c098d4a6879d52cc8bdeccc50"
+          )}
+          {ExternalLinkButton(
+            "DexScreener - Ethereum",
+            "https://dexscreener.com/ethereum/0x9c051f8a6648a51ef324d30c235da74d060153ac"
+          )}
+          {ExternalLinkButton(
+            "DexScreener - Aurora",
+            "https://dexscreener.com/aurora/0xddadf88b007b95feb42ddbd110034c9a8e9746f2"
+          )}
+          {ExternalLinkButton(
+            "DexScreener - Polygon",
+            "https://dexscreener.com/polygon/0x85efec4ee18a06ce1685abf93e434751c3cb9ba9"
           )}
         </div>
       </div>
@@ -64,19 +77,3 @@ const Home: NextPage = () => {
 };
 
 export default Home;
-
-const externalLink = (text: string, href: string) => (
-  <>
-    <a
-      target="_blank"
-      rel="noreferrer"
-      href={href}
-      className={classNames(
-        "font-semibold bg-bg-darkRaised px-10 py-4 rounded-xl border border-separator-dark text-xl",
-        "hover:bg-gradient-to-br hover:from-techyGradientA hover:to-techyGradientB hover:decoration-techyGradientB"
-      )}
-    >
-      {text}
-    </a>
-  </>
-);
