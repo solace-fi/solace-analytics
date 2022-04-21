@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import Link from "next/link";
 import styles from "../styles/Home.module.css";
 import { ethers } from "ethers";
 const BN = ethers.BigNumber;
@@ -33,6 +34,7 @@ const Exposures: NextPage = (props: any) => {
     <div className={styles.container}>
       <SectionTitle size="h3">SWC Exposures by Protocol</SectionTitle>
       <p>Note: positions are cached and may not reflect current state</p>
+      <p>Note: premiums are calculated by policy, not protocol. This view provides an estimate. See <Link href="/policies"><a>policies</a></Link> for more accurate figures</p><br/>
       <ExposuresTable protocols={protocols} />
       <br />
       <br />

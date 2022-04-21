@@ -1,7 +1,3 @@
-import { SwapSimTooltip } from "@components/atoms/SwapSimTooltip";
-import { tooltipFormatterBigNumber, tooltipFormatterCurrency, tooltipFormatterNumber } from "@helpers";
-import { format } from "date-fns";
-
 import {
   Line,
   LineChart,
@@ -12,6 +8,8 @@ import {
   ReferenceLine,
   ResponsiveContainer,
 } from "recharts";
+
+import { SwapSimTooltip } from "@components/atoms/SwapSimTooltip";
 
 const SolaceUsdSwapAmountSimulatorChart: any = (props: any) => {
   return (

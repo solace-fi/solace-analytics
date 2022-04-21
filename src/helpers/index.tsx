@@ -2,14 +2,6 @@ import { ethers } from "ethers"
 const BN = ethers.BigNumber
 const formatUnits = ethers.utils.formatUnits
 
-/*
-export function formatCurrency(n: string | number): string{
-  return n !== 0
-    ? `$${parseFloat(n+"").toLocaleString()}`
-    : "0"
-}
-*/
-
 export function formatCurrency(params: any) {
   function f(n: any) {
     if(typeof n == "number") n = `${n}`
@@ -25,13 +17,6 @@ export function formatCurrency(params: any) {
   return f
 }
 
-/*
-export function formatNumber(n: string | number): string{
-  return n !== 0
-    ? `${parseFloat(n+"").toLocaleString()}`
-    : "0"
-}
-*/
 export function formatNumber(params: any) {
   function f(n: string) {
     if(typeof n == "number") n = `${n}`
@@ -64,29 +49,21 @@ export function formatBigNumber(params: any) {
   return f
 }
 
-/*
-export function tooltipFormatterCurrency(value:any, name:any, props:any) {
-  return formatCurrency(value)
-}
-*/
-
 export function tooltipFormatterCurrency(params:any) {
   var f2 = formatCurrency(params)
   function f(value:any, name:any, props:any) {
-    return f2(value)
+    let num = f2(value)
+    return num
   }
   return f
 }
 
-/*
-export function tooltipFormatterNumber(value:any, name:any, props:any) {
-  return formatNumber()(value)
-}
-*/
 export function tooltipFormatterNumber(params:any) {
   var f2 = formatNumber(params)
-  function f(value:any, name:any, props:any) {
-    return f2(value)
+  function f(props:any) {
+    let num = f2(props)
+    if(params.prefix) num = `${params.prefix}${num}`
+    return num
   }
   return f
 }
@@ -94,13 +71,15 @@ export function tooltipFormatterNumber(params:any) {
 export function tooltipFormatterBigNumber(params:any) {
   var f2 = formatBigNumber(params)
   function f(value:any, name:any, props:any) {
-    return f2(value)
+    let bn = f2(value)
+    return bn
   }
   return f
 }
 
 export function tooltipLabelFormatterTime(value:any) {
-  return formatTimestamp(value)
+  var timestamp = formatTimestamp(value)
+  return <span style={{color:"white"}}>{timestamp}</span>
 }
 
 // formats a unix timestamp (in seconds) to UTC string representation
