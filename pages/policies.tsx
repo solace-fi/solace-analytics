@@ -64,23 +64,15 @@ function toFloat(swc: any) {
 }
 
 const PolicyTable: any = (props: any) => {
-  var s =
-    "policyID | policyholder                               | coverLimit | premiumsCharged | referralsEarned\n------------------------------------------------------------------------------------------------------\n";
-  var fn = formatNumber({ decimals: 0 });
+  var s = "policyID | policyholder                               | coverLimit |depositsMade| premiumsCharged | referralsEarned\n-------------------------------------------------------------------------------------------------------------------\n"
+  var fn = formatNumber({ decimals: 0 })
   props.policies.forEach((policy: any) => {
-    var policyID = leftPad(policy.policyID, 8, " ");
-    var coverLimit = leftPad(fn(formatUnits(policy.coverLimit, 18)), 10, " ");
-    var premiumsCharged = leftPad(
-      fn(formatUnits(policy.premiumsCharged, 18)),
-      15,
-      " "
-    );
-    var referralsEarned = leftPad(
-      fn(formatUnits(policy.rewardPointsEarned, 18)),
-      15,
-      " "
-    );
-    s = `${s}${policyID} | ${policy.policyholder} | ${coverLimit} | ${premiumsCharged} | ${referralsEarned}\n`;
+    var policyID = leftPad(policy.policyID, 8, ' ')
+    var coverLimit = leftPad(fn(formatUnits(policy.coverLimit, 18)), 10, ' ')
+    var depositsMade = leftPad(fn(formatUnits(policy.depositsMade, 18)), 10, ' ')
+    var premiumsCharged = leftPad(fn(formatUnits(policy.premiumsCharged, 18)), 15, ' ')
+    var referralsEarned = leftPad(fn(formatUnits(policy.rewardPointsEarned, 18)), 15, ' ')
+    s = `${s}${policyID} | ${policy.policyholder} | ${coverLimit} | ${depositsMade} | ${premiumsCharged} | ${referralsEarned}\n`
   });
   return <pre>{s}</pre>;
 };
