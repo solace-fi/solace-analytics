@@ -1,3 +1,5 @@
+import { SwapSimTooltip } from "@components/atoms/SwapSimTooltip";
+import { tooltipFormatterNumber } from "@helpers";
 import { format } from "date-fns";
 
 import {
@@ -22,8 +24,8 @@ const SolaceUsdSwapPriceSolaceSimulatorChart: any = (props: any) => {
       margin={{ top: 10, right: 30, left: 30, bottom: 0 }}
     >
       <CartesianGrid strokeDasharray="3 3" />
-      <ReferenceLine x={0} stroke="black" />
-      <ReferenceLine y={props.price} stroke="black" />
+      <ReferenceLine x={0} stroke="#777777" />
+      <ReferenceLine y={props.price} stroke="#777777" />
       <XAxis
         dataKey="solace"
         scale="time"
@@ -48,11 +50,11 @@ const SolaceUsdSwapPriceSolaceSimulatorChart: any = (props: any) => {
         allowDataOverflow={false}
         stroke="#c0c2c3"
       />
-      <Tooltip />
+      <Tooltip content={<SwapSimTooltip labelPrefix="solace" valueDecimals={4}/>} />
       <Line
         type="monotone"
         dataKey="price"
-        stroke="#000000"
+        stroke="#FFFFFF"
         dot={false}
         strokeWidth={1}
       />

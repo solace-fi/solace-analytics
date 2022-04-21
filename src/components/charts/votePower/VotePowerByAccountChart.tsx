@@ -67,6 +67,18 @@ function reformatData(data: any) {
   tableData = `${tableData}\n---------------------------------------------------------\n                                     total | ${powerSum}`
   let tableData2 = <pre>{tableData}</pre>
 
+  //return [ownerArr, tableData2]
+
+  let sum = 0;
+  for(var i = 0; i < ownerArr.length; ++i) sum += ownerArr[i].votePower;
+  let target = sum * 0.1;
+  let rest = 0;
+  while(rest < target) {
+    let next = ownerArr.pop()
+    rest += next.votePower
+  }
+  ownerArr.push({name: "rest", votePower: rest})
+
   return [ownerArr, tableData2]
 }
 

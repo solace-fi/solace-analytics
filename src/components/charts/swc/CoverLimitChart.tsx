@@ -1,7 +1,5 @@
-import { format } from "date-fns";
+import { CustomTooltip } from "@components/atoms/CustomTooltip";
 import { ethers } from "ethers";
-const BN = ethers.BigNumber;
-const formatUnits = ethers.utils.formatUnits;
 
 import {
   Line,
@@ -15,13 +13,8 @@ import {
 
 import {
   formatNumber,
-  formatBigNumber,
-  tooltipFormatterNumber,
-  tooltipFormatterBigNumber,
-  tooltipLabelFormatterTime,
   range,
   formatTimestamp,
-  leftPad,
   calculateWeeklyTicks,
   xtickLabelFormatter,
 } from "./../../../helpers/index";
@@ -63,10 +56,7 @@ const CoverLimitChart: any = (props: any) => {
         allowDataOverflow={false}
         stroke="#c0c2c3"
       />
-      <Tooltip
-        formatter={tooltipFormatterNumber({ decimals: 0 })}
-        labelFormatter={tooltipLabelFormatterTime}
-      />
+      <Tooltip content={<CustomTooltip valuePrefix="$" valueDecimals={2}/>} />
       <Line
         type="monotone"
         dataKey="sum.coverLimit"

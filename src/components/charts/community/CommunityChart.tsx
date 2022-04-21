@@ -1,3 +1,4 @@
+import { CustomTooltip } from "@components/atoms/CustomTooltip";
 import { format } from "date-fns";
 
 import {
@@ -17,7 +18,7 @@ import {
   range,
   calculateWeeklyTicks,
   xtickLabelFormatter,
-} from "./../../helpers/index";
+} from "./../../../helpers/index";
 
 const CommunityChart: any = (props: any) => {
   let data: any[] = props.community;
@@ -31,8 +32,9 @@ const CommunityChart: any = (props: any) => {
     if (d.Discord > max) max = d.Discord;
     if (d.Twitter > max) max = d.Twitter;
   }
-  max = Math.ceil(max / 1000) * 1000;
-  let ticks = range(0, max + 1, 1000);
+  let interval = 1000;
+  max = Math.ceil(max / interval) * interval;
+  let ticks = range(0, max + 1, interval);
 
   let history = data;
   let xticks = calculateWeeklyTicks(
@@ -42,8 +44,8 @@ const CommunityChart: any = (props: any) => {
 
   return (
     <LineChart
-      width={730}
-      height={250}
+      width={1000}
+      height={300}
       data={data}
       margin={{ top: 10, right: 30, left: 30, bottom: 0 }}
     >
@@ -65,21 +67,18 @@ const CommunityChart: any = (props: any) => {
         allowDataOverflow={false}
         stroke="#c0c2c3"
       />
-      <Tooltip
-        formatter={tooltipFormatterNumber({ decimals: 0 })}
-        labelFormatter={tooltipLabelFormatterTime}
-      />
+      <Tooltip content={<CustomTooltip valueDecimals={0}/>} />
       <Line
         type="monotone"
-        dataKey="Twitter"
-        stroke="#34aaf3"
+        dataKey="Discord"
+        stroke="#6543ec"
         dot={false}
         strokeWidth={1}
       />
       <Line
         type="monotone"
-        dataKey="Discord"
-        stroke="#6543ec"
+        dataKey="Twitter"
+        stroke="#34aaf3"
         dot={false}
         strokeWidth={1}
       />

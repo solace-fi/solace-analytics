@@ -2,10 +2,10 @@ import type { NextPage } from "next";
 import styles from "../styles/Home.module.css";
 
 import Loading from "./../src/components/Loading";
-import PriceChart from "./../src/components/charts/PriceChart";
-import SolaceUsdSwapAmountSimulatorChart from "./../src/components/charts/SolaceUsdSwapAmountSimulatorChart";
-import SolaceUsdSwapPriceUsdSimulatorChart from "./../src/components/charts/SolaceUsdSwapPriceUsdSimulatorChart";
-import SolaceUsdSwapPriceSolaceSimulatorChart from "./../src/components/charts/SolaceUsdSwapPriceSolaceSimulatorChart";
+import PriceChart from "./../src/components/charts/markets/PriceChart";
+import SolaceUsdSwapAmountSimulatorChart from "./../src/components/charts/markets/SolaceUsdSwapAmountSimulatorChart";
+import SolaceUsdSwapPriceUsdSimulatorChart from "./../src/components/charts/markets/SolaceUsdSwapPriceUsdSimulatorChart";
+import SolaceUsdSwapPriceSolaceSimulatorChart from "./../src/components/charts/markets/SolaceUsdSwapPriceSolaceSimulatorChart";
 import SectionTitle from "@components/atoms/SectionTitle";
 
 const Markets: NextPage = (props: any) => {

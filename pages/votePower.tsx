@@ -5,8 +5,8 @@ import { format } from "date-fns";
 import { useEffect, useState } from "react";
 
 import Loading from "./../src/components/Loading";
-import VotePowerByAccountChart from "./../src/components/charts/VotePowerByAccountChart";
-import VotePowerOverTimeChart from "./../src/components/charts/VotePowerOverTimeChart";
+import VotePowerByAccountChart from "./../src/components/charts/votePower/VotePowerByAccountChart";
+import VotePowerOverTimeChart from "./../src/components/charts/votePower/VotePowerOverTimeChart";
 import SectionTitle from "@components/atoms/SectionTitle";
 
 const VotePower: NextPage = (props: any) => {

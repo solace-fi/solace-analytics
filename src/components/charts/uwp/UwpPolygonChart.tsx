@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { CustomTooltip } from "@components/atoms/CustomTooltip";
 
 import {
   Area,
@@ -11,8 +11,6 @@ import {
 
 import {
   formatCurrency,
-  tooltipFormatterCurrency,
-  tooltipLabelFormatterTime,
   calculateWeeklyTicks,
   xtickLabelFormatter,
 } from "./../../../helpers/index";
@@ -107,10 +105,7 @@ const UwpPolygon: any = (props: any) => {
         stroke="#c0c2c3"
       />
       <CartesianGrid strokeDasharray="3 3" />
-      <Tooltip
-        formatter={tooltipFormatterCurrency({ decimals: 0 })}
-        labelFormatter={tooltipLabelFormatterTime}
-      />
+      <Tooltip content={<CustomTooltip valueDecimals={2}/>} />
       <Area
         type="monotone"
         dataKey="dai"

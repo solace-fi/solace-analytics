@@ -28,3 +28,77 @@ a {
 .navbar a {
   margin: 10px;
 }
+
+
+
+.custom-tooltip {
+  margin: "0px";
+  padding: 10px 10px 20px 10px;
+  background-color: rgb(67,71,82);
+  border: 1px solid rgb(204, 204, 204);
+  border-radius: 10px;
+  white-space: nowrap;
+}
+
+.custom-tooltip-label {
+  margin: 0px;
+  padding: 4px 16px 8px 16px;
+}
+
+.custom-tooltip-item-list {
+  padding: 0px;
+  margin: 0px;
+}
+
+.custom-tooltip-item {
+  display: block;
+  padding: 0px 16px 0px 16px;
+}
+
+.custom-tooltip-item-text {
+  display: inline-block;
+  color: #FFFFFF;
+}
+
+.custom-tooltip-item-color-wrapper {
+  height: 24px;
+  width: 24px;
+  padding: 12px 0px 0px 0px;
+  display: inline-block;
+}
+
+.custom-tooltip-item-color {
+  height: 12px;
+  width: 12px;
+  border-radius: 6px;
+}
+
+
+
+.swapsim-tooltip {
+  margin: "0px";
+  padding: 10px 10px 10px 10px;
+  background-color: rgb(67,71,82);
+  border: 1px solid rgb(204, 204, 204);
+  border-radius: 10px;
+  white-space: nowrap;
+}
+
+.swapsim-tooltip-item-list {
+  padding: 0px;
+  margin: 0px;
+}
+
+.swapsim-tooltip-item {
+  display: block;
+  padding: 0px 16px 0px 16px;
+}
+
+.swapsim-tooltip-item-text {
+  display: inline-block;
+  color: #FFFFFF;
+}
+
+g.recharts-cartesian-grid-horizontal line, g.recharts-cartesian-grid-vertical line {
+  stroke: #555
+}

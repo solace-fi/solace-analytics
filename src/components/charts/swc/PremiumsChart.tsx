@@ -1,7 +1,4 @@
-import { format } from "date-fns";
-import { ethers } from "ethers";
-const BN = ethers.BigNumber;
-const formatUnits = ethers.utils.formatUnits;
+import { CustomTooltip } from "@components/atoms/CustomTooltip";
 
 import {
   Line,
@@ -15,17 +12,10 @@ import {
 
 import {
   formatNumber,
-  formatBigNumber,
-  tooltipFormatterNumber,
-  tooltipFormatterBigNumber,
-  tooltipLabelFormatterTime,
   range,
-  rangeBN,
   formatTimestamp,
-  leftPad,
   calculateWeeklyTicks,
   xtickLabelFormatter,
-  sortBNs,
 } from "./../../../helpers/index";
 
 const PremiumsChart: any = (props: any) => {
@@ -65,10 +55,7 @@ const PremiumsChart: any = (props: any) => {
         allowDataOverflow={false}
         stroke="#c0c2c3"
       />
-      <Tooltip
-        formatter={tooltipFormatterNumber({ decimals: 0 })}
-        labelFormatter={tooltipLabelFormatterTime}
-      />
+      <Tooltip content={<CustomTooltip valuePrefix="$" valueDecimals={2}/>} />
       <Line
         type="monotone"
         dataKey="sum.depositsMade"
@@ -148,9 +135,10 @@ function joinHistories(histories: any) {
   }
 
   // y ticks
+  let interval = 2500;
   let ymax = findMax(history);
-  ymax = Math.ceil(ymax / 1000) * 1000;
-  var yticks = range(0, ymax + 0.01, 1000);
+  ymax = Math.ceil(ymax / interval) * interval;
+  var yticks = range(0, ymax + 0.01, interval);
 
   return [history, yticks];
 }

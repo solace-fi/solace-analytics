@@ -21,6 +21,10 @@ const Uwp: NextPage = (props: any) => {
       <br />
       <SectionTitle size="h4">UWP Polygon</SectionTitle>
       <UwpPolygonChart csv={uwp["137"]} />
+      <br />
+      <br />
+      <br />
+      <br />
     </div>
   );
 };

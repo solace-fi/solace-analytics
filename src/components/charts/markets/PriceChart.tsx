@@ -1,5 +1,3 @@
-import { format } from "date-fns";
-
 import {
   Line,
   LineChart,
@@ -10,6 +8,8 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+import { CustomTooltip } from "@components/atoms/CustomTooltip";
+
 import {
   formatCurrency,
   tooltipFormatterCurrency,
@@ -18,7 +18,8 @@ import {
   leftPad,
   calculateWeeklyTicks,
   xtickLabelFormatter,
-} from "./../../helpers/index";
+  rightPad,
+} from "./../../../helpers/index";
 
 const Price: any = (props: any) => {
   // transform data
@@ -123,14 +124,11 @@ const Price: any = (props: any) => {
         allowDataOverflow={false}
         stroke="#c0c2c3"
       />
-      <Tooltip
-        formatter={tooltipFormatterCurrency({ decimals: 5 })}
-        labelFormatter={tooltipLabelFormatterTime}
-      />
+      <Tooltip content={<CustomTooltip valuePrefix="$" valueDecimals={5}/>} />
       <Line
         type="monotone"
         dataKey="mainnet"
-        stroke="#000000"
+        stroke="#ff4400"
         dot={false}
         strokeWidth={1}
       />
@@ -151,11 +149,5 @@ const Price: any = (props: any) => {
     </LineChart>
   );
 };
-
-//content={renderTooltip}
-function renderTooltip(args: any) {
-  console.log(args);
-  return args;
-}
 
 export default Price;

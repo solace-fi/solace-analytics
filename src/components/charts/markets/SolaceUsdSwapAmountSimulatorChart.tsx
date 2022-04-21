@@ -1,3 +1,5 @@
+import { SwapSimTooltip } from "@components/atoms/SwapSimTooltip";
+import { tooltipFormatterBigNumber, tooltipFormatterCurrency, tooltipFormatterNumber } from "@helpers";
 import { format } from "date-fns";
 
 import {
@@ -11,17 +13,20 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const SolaceUsdSwapPriceUsdSimulatorChart: any = (props: any) => {
+const SolaceUsdSwapAmountSimulatorChart: any = (props: any) => {
   return (
     <LineChart
       width={730}
       height={250}
-      data={props.priceByUsd.filter((x: any) => x.price < 1.2)}
+      data={props.solaceByUsd.filter(
+        (x: any) =>
+          x.solace < 10000000 && x.solace > -10000000 && x.usd < 4000000
+      )}
       margin={{ top: 10, right: 30, left: 30, bottom: 0 }}
     >
       <CartesianGrid strokeDasharray="3 3" />
-      <ReferenceLine x={0} stroke="black" />
-      <ReferenceLine y={props.price} stroke="black" />
+      <ReferenceLine x={0} stroke="#777777" />
+      <ReferenceLine y={0} stroke="#777777" />
       <XAxis
         dataKey="usd"
         scale="time"
@@ -46,11 +51,11 @@ const SolaceUsdSwapPriceUsdSimulatorChart: any = (props: any) => {
         allowDataOverflow={false}
         stroke="#c0c2c3"
       />
-      <Tooltip />
+      <Tooltip content={<SwapSimTooltip labelPrefix="usd"/>} />
       <Line
         type="monotone"
-        dataKey="price"
-        stroke="#000000"
+        dataKey="solace"
+        stroke="#FFFFFF"
         dot={false}
         strokeWidth={1}
       />
@@ -58,4 +63,4 @@ const SolaceUsdSwapPriceUsdSimulatorChart: any = (props: any) => {
   );
 };
 
-export default SolaceUsdSwapPriceUsdSimulatorChart;
+export default SolaceUsdSwapAmountSimulatorChart;

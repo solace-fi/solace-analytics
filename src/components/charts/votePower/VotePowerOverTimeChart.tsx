@@ -1,3 +1,4 @@
+import { CustomTooltip } from "@components/atoms/CustomTooltip";
 import { format } from "date-fns";
 import { ethers } from "ethers";
 const BN = ethers.BigNumber;
@@ -19,7 +20,8 @@ import {
   tooltipLabelFormatterTime,
   xtickLabelFormatterWithYear,
   calculateYearlyTicks,
-} from "./../../helpers/index";
+  range,
+} from "./../../../helpers/index";
 
 const VotePowerOverTimeChart: any = (props: any) => {
   const keys = Object.keys(props.xslocker);
@@ -30,6 +32,12 @@ const VotePowerOverTimeChart: any = (props: any) => {
     history[0].timestamp,
     history[history.length - 1].timestamp
   );
+
+  // y ticks
+  let interval = 6000000;
+  let ymax = history[0].votePower;
+  ymax = Math.ceil(ymax / interval) * interval;
+  var yticks = range(0, ymax + 0.01, interval);
 
   return (
     <LineChart
@@ -51,15 +59,17 @@ const VotePowerOverTimeChart: any = (props: any) => {
       />
       <YAxis
         tickFormatter={formatNumber({ decimals: 0 })}
-        domain={[0, "auto"]}
+        scale="linear"
+        type="number"
+        ticks={yticks}
         allowDataOverflow={false}
         stroke="#c0c2c3"
       />
-      <Tooltip labelFormatter={tooltipLabelFormatterTime} />
+      <Tooltip content={<CustomTooltip valueDecimals={0}/>} />
       <Line
         type="monotone"
         dataKey="votePower"
-        stroke="#000000"
+        stroke="#CCCCCC"
         dot={false}
         strokeWidth={1}
       />

@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import styles from "../styles/Home.module.css";
 
 import Loading from "./../src/components/Loading";
-import CommunityChart from "./../src/components/charts/CommunityChart";
+import CommunityChart from "./../src/components/charts/community/CommunityChart";
 import SectionTitle from "@components/atoms/SectionTitle";
 
 const Community: NextPage = (props: any) => {

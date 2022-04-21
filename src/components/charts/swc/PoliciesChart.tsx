@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { CustomTooltip } from "@components/atoms/CustomTooltip";
 
 import {
   Line,
@@ -12,11 +12,8 @@ import {
 
 import {
   formatNumber,
-  tooltipFormatterNumber,
-  tooltipLabelFormatterTime,
   range,
   formatTimestamp,
-  leftPad,
   calculateWeeklyTicks,
   xtickLabelFormatter,
 } from "./../../../helpers/index";
@@ -58,10 +55,7 @@ const PoliciesChart: any = (props: any) => {
         allowDataOverflow={false}
         stroke="#c0c2c3"
       />
-      <Tooltip
-        formatter={tooltipFormatterNumber({ decimals: 0 })}
-        labelFormatter={tooltipLabelFormatterTime}
-      />
+      <Tooltip content={<CustomTooltip valueDecimals={0}/>} />
       <Line
         type="monotone"
         dataKey="SWC V1"
@@ -132,8 +126,9 @@ function joinHistories(histories: any) {
   }
 
   // y ticks
-  ymax = Math.ceil(ymax / 20) * 20;
-  var yticks = range(0, ymax + 0.01, 20);
+  let interval = 50;
+  ymax = Math.ceil(ymax / interval) * interval;
+  var yticks = range(0, ymax + 0.01, interval);
 
   return [history, yticks];
 }
