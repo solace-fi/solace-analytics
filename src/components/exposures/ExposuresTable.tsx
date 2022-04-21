@@ -1,10 +1,8 @@
-//import { formatNumber, tooltipFormatterNumber, tooltipLabelFormatterTime, range, formatTimestamp, leftPad, rightPad, calculateWeeklyTicks, xtickLabelFormatter, createLine } from "./../../helpers/index"
-
 import { ethers } from "ethers"
 const BN = ethers.BigNumber
 const formatUnits = ethers.utils.formatUnits
 import { useState } from "react"
-import { leftPad, rightPad, formatNumber, createLine } from "./../../helpers/index"
+import { leftPad, rightPad, formatNumber, createLine, range } from "./../../helpers/index"
 
 // displays all protocols we have exposure to
 const ExposuresTable: any = (props: any) => {
@@ -20,7 +18,7 @@ const ExposuresTable: any = (props: any) => {
     rightPad('policies', 8)
   ].join(' | ')
   var line = createLine(s.length)
-  s = `${s}\n${line}\n`
+  s = `${s}\n${line}`
   var tableHead = <pre style={{margin:"0"}}>{s}</pre>
   var tableRows = props.protocols.map((protocol:any) => {
     var key = `protocol_${protocol.appId}_${protocol.network}`
@@ -52,12 +50,13 @@ const ExposuresTable: any = (props: any) => {
 export default ExposuresTable
 
 const ExposuresRow: any = (props: any) => {
-  const [isOpen, setIsOpen] = useState(false)
-  var fn2 = formatNumber({decimals:2})
   var protocol = props.protocol
 
-  var key = `protocol_${protocol.appId}_${protocol.network}`
-  var s = [
+  const [isOpen, setIsOpen] = useState(false)
+  var toggleIsOpen = () => { setIsOpen(!isOpen) }
+
+  var fn2 = formatNumber({decimals:2})
+  var mainRowText = [
     rightPad(protocol.appId, 20),
     rightPad(protocol.network, 20),
     leftPad(fn2(protocol.balanceUSD), 12),
@@ -68,30 +67,35 @@ const ExposuresRow: any = (props: any) => {
     rightPad(protocol.category, 16),
     leftPad(protocol.policies.length, 8)
   ].join(' | ')
+  var mainRowStyle: any = {margin:"0",display:"inline"}
+  if(isOpen) mainRowStyle.backgroundColor = "#333333"
+  var mainRow = <pre style={mainRowStyle}>{mainRowText}</pre>
 
-  if(isOpen) {
-    s = `${s} --v  view\n`
-    for(var i = 0; i < protocol.policies.length; ++i) {
-      var policy = protocol.policies[i]
-      var position = protocol.positions[i]
-      var s3 = [
-        leftPad(`- policyId ${leftPad(policy.policyID, 5)}`, 20),
-        rightPad(policy.network, 20),
-        leftPad(fn2(position.balanceUSD), 12),
-        leftPad(fn2(formatUnits(policy.coverLimit,18)), 12),
-        leftPad(fn2(position.premiumsPerYear), 12),
-        `policyholder ${policy.policyholder}`
-      ].join(' | ')
-      s = `${s}${s3}\n`
-    }
-    return (<div>
-      <pre style={{margin:"0",backgroundColor:"#eeeeee"}} onClick={()=>setIsOpen(!isOpen)}>{s}</pre>
-      <pre style={{margin:"0"}}>{' '}</pre>
-    </div>)
-  } else {
-    s = `${s} -->  view`
-    return (<div>
-      <pre style={{margin:"0"}} onClick={()=>setIsOpen(!isOpen)}>{s}</pre>
-    </div>)
-  }
+  var viewButtonText = isOpen ? " --v view" : " --> view"
+  var viewButton = <pre style={mainRowStyle} onClick={toggleIsOpen}>{viewButtonText}</pre>
+
+  var policyStyle: any = {margin:"0",backgroundColor:"#333333"}
+  var policies: any = (!isOpen) ? null : range(0, protocol.policies.length).map((i:number) => {
+    var policy = protocol.policies[i]
+    var position = protocol.positions[i]
+    var policyText = [
+      leftPad(`- policyId ${leftPad(policy.policyID, 5)}`, 20),
+      rightPad(policy.network, 20),
+      leftPad(fn2(position.balanceUSD), 12),
+      leftPad(fn2(formatUnits(policy.coverLimit,18)), 12),
+      leftPad(fn2(position.premiumsPerYear), 12),
+      `policyholder ${policy.policyholder}`
+    ].join(' | ')
+    return <pre style={policyStyle} key={policy.policyID}>{policyText}</pre>
+  })
+
+  var spacer = isOpen ? <pre style={{margin:"0"}}>{''}</pre> : undefined
+
+  var numPolicies = isOpen ? policies.length : 0
+  var height = `${(numPolicies+1)*24}px`
+  return <div style={{}}>
+    {mainRow}{viewButton}<br/>
+    {policies}
+    {spacer}
+  </div>
 }
