@@ -19,13 +19,13 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      <main className="bg-bg-dark min-h-screen text-light font-body">
-        <AnalyticsHead />
-        <AnalyticsNavbar />
-        <body className="p-5 bg-bg-dark font-body ml-25">
+      <AnalyticsHead />
+      <body className="p-5 bg-bg-dark font-body ml-25">
+        <main className="bg-bg-dark min-h-screen text-light font-body">
+          <AnalyticsNavbar />
           <Component {...pageProps} {...data} />
-        </body>
-      </main>
+        </main>
+      </body>
     </>
   );
 }
