@@ -11,7 +11,7 @@ import {
 
 import {
   formatCurrency,
-  calculateWeeklyTicks,
+  calculateMonthlyTicks,
   xtickLabelFormatter,
 } from "./../../../helpers/index";
 
@@ -44,7 +44,7 @@ const UwpAurora: any = (props: any) => {
   }
 
   let history = reformatData(props.csv);
-  let xticks = calculateWeeklyTicks(
+  let xticks = calculateMonthlyTicks(
     history[0].timestamp,
     history[history.length - 1].timestamp
   );

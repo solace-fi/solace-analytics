@@ -12,13 +12,9 @@ import { CustomTooltip } from "@components/atoms/CustomTooltip";
 
 import {
   formatCurrency,
-  tooltipFormatterCurrency,
-  tooltipLabelFormatterTime,
   range,
-  leftPad,
-  calculateWeeklyTicks,
+  calculateMonthlyTicks,
   xtickLabelFormatter,
-  rightPad,
 } from "./../../../helpers/index";
 
 const Price: any = (props: any) => {
@@ -73,7 +69,7 @@ const Price: any = (props: any) => {
   //let yticks = range(0.04, 0.0501, 0.001)
 
   let history = newData;
-  let xticks = calculateWeeklyTicks(
+  let xticks = calculateMonthlyTicks(
     history[0].timestamp,
     history[history.length - 1].timestamp
   );

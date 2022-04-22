@@ -14,7 +14,7 @@ import {
   formatNumber,
   range,
   formatTimestamp,
-  calculateWeeklyTicks,
+  calculateMonthlyTicks,
   xtickLabelFormatter,
 } from "./../../../helpers/index";
 
@@ -24,7 +24,7 @@ const PremiumsChart: any = (props: any) => {
     "SWC V2": props.swc.swcv2.history,
   });
 
-  let xticks = calculateWeeklyTicks(
+  let xticks = calculateMonthlyTicks(
     history[0].timestamp,
     history[history.length - 1].timestamp
   );

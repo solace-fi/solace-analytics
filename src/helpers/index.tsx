@@ -135,6 +135,31 @@ export function calculateWeeklyTicks(start:number, stop:number) {
 }
 
 // calculate x ticks. include start and stop times and midnight utc before every sunday
+export function calculateMonthlyTicks(start:number, stop:number) {
+  var xticks = [start, stop];
+  var startDate = new Date(start*1000);
+  var stopDate = new Date(stop*1000);
+  var d = new Date(0);
+  d.setUTCFullYear(startDate.getUTCFullYear());
+  d.setUTCMonth(startDate.getUTCMonth() + 1);
+  while(d.getTime() < stopDate.getTime()) {
+    // push
+    xticks.push(d.getTime()/1000)
+    // roll over year
+    if(d.getUTCMonth() == 11) {
+      d.setUTCFullYear(d.getUTCFullYear() + 1);
+      d.setUTCMonth(0);
+    }
+    // next month same year
+    else {
+      d.setUTCMonth(d.getUTCMonth() + 1);
+    }
+  }
+  xticks = Array.from(new Set(xticks)).sort()
+  return xticks
+}
+
+// calculate x ticks. include start and stop times and midnight utc before every sunday
 export function calculateYearlyTicks(start:number, stop:number) {
   var xticks = [start, stop]
   var startYear = new Date(start*1000).getUTCFullYear()

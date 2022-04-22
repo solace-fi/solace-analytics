@@ -1,5 +1,4 @@
 import { CustomTooltip } from "@components/atoms/CustomTooltip";
-import { format } from "date-fns";
 
 import {
   Line,
@@ -13,10 +12,8 @@ import {
 
 import {
   formatNumber,
-  tooltipFormatterNumber,
-  tooltipLabelFormatterTime,
   range,
-  calculateWeeklyTicks,
+  calculateMonthlyTicks,
   xtickLabelFormatter,
 } from "./../../../helpers/index";
 
@@ -37,7 +34,7 @@ const CommunityChart: any = (props: any) => {
   let ticks = range(0, max + 1, interval);
 
   let history = data;
-  let xticks = calculateWeeklyTicks(
+  let xticks = calculateMonthlyTicks(
     history[0].timestamp,
     history[history.length - 1].timestamp
   );
