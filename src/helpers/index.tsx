@@ -2,14 +2,6 @@ import { ethers } from "ethers"
 const BN = ethers.BigNumber
 const formatUnits = ethers.utils.formatUnits
 
-/*
-export function formatCurrency(n: string | number): string{
-  return n !== 0
-    ? `$${parseFloat(n+"").toLocaleString()}`
-    : "0"
-}
-*/
-
 export function formatCurrency(params: any) {
   function f(n: any) {
     if(typeof n == "number") n = `${n}`
@@ -25,21 +17,13 @@ export function formatCurrency(params: any) {
   return f
 }
 
-/*
-export function formatNumber(n: string | number): string{
-  return n !== 0
-    ? `${parseFloat(n+"").toLocaleString()}`
-    : "0"
-}
-*/
 export function formatNumber(params: any) {
   function f(n: string) {
     if(typeof n == "number") n = `${n}`
     var str = `${parseInt(n).toLocaleString()}`
     if(!params || !params.decimals || params.decimals <= 0) return str
     var i = n.indexOf(".")
-    if(i == -1) return str
-    var str2 = n.substring(i+1)
+    var str2 = (i == -1) ? '' : n.substring(i+1)
     str2 = rightPad(str2.substring(0,params.decimals), params.decimals, '0')
     str = `${str}.${str2}`
     return str
@@ -65,29 +49,21 @@ export function formatBigNumber(params: any) {
   return f
 }
 
-/*
-export function tooltipFormatterCurrency(value:any, name:any, props:any) {
-  return formatCurrency(value)
-}
-*/
-
 export function tooltipFormatterCurrency(params:any) {
   var f2 = formatCurrency(params)
   function f(value:any, name:any, props:any) {
-    return f2(value)
+    let num = f2(value)
+    return num
   }
   return f
 }
 
-/*
-export function tooltipFormatterNumber(value:any, name:any, props:any) {
-  return formatNumber()(value)
-}
-*/
 export function tooltipFormatterNumber(params:any) {
   var f2 = formatNumber(params)
-  function f(value:any, name:any, props:any) {
-    return f2(value)
+  function f(props:any) {
+    let num = f2(props)
+    if(params.prefix) num = `${params.prefix}${num}`
+    return num
   }
   return f
 }
@@ -95,13 +71,15 @@ export function tooltipFormatterNumber(params:any) {
 export function tooltipFormatterBigNumber(params:any) {
   var f2 = formatBigNumber(params)
   function f(value:any, name:any, props:any) {
-    return f2(value)
+    let bn = f2(value)
+    return bn
   }
   return f
 }
 
 export function tooltipLabelFormatterTime(value:any) {
-  return formatTimestamp(value)
+  var timestamp = formatTimestamp(value)
+  return <span style={{color:"white"}}>{timestamp}</span>
 }
 
 // formats a unix timestamp (in seconds) to UTC string representation
@@ -111,20 +89,20 @@ export function formatTimestamp(timestamp:number) {
   return `${d.getUTCMonth()+1}/${d.getUTCDate()}/${d.getUTCFullYear()} ${leftPad(d.getUTCHours(),2,'0')}:${leftPad(d.getUTCMinutes(),2,'0')}:${leftPad(d.getUTCSeconds(),2,'0')}`
 }
 
-export function leftPad(s:any, l:number, f:string) {
+export function leftPad(s:any, l:number, f:string=' ') {
   let s2 = `${s}`
   while(s2.length < l) s2 = `${f}${s2}`
   return s2
 }
 
-export function rightPad(s:any, l:number, f:string) {
+export function rightPad(s:any, l:number, f:string=' ') {
   let s2 = `${s}`
   while(s2.length < l) s2 = `${s2}${f}`
   return s2
 }
 
 // note: only supports positive step
-export function range(start: number, stop: number, step: number) {
+export function range(start: number, stop: number, step: number=1) {
   let arr = []
   for(let i = start; i < stop; i += step) arr.push(i)
   return arr
@@ -152,6 +130,31 @@ export function calculateWeeklyTicks(start:number, stop:number) {
   let xticks = range(rstart, rstop, one_week)
   xticks.push(start)
   xticks.push(stop)
+  xticks = Array.from(new Set(xticks)).sort()
+  return xticks
+}
+
+// calculate x ticks. include start and stop times and midnight utc before every sunday
+export function calculateMonthlyTicks(start:number, stop:number) {
+  var xticks = [start, stop];
+  var startDate = new Date(start*1000);
+  var stopDate = new Date(stop*1000);
+  var d = new Date(0);
+  d.setUTCFullYear(startDate.getUTCFullYear());
+  d.setUTCMonth(startDate.getUTCMonth() + 1);
+  while(d.getTime() < stopDate.getTime()) {
+    // push
+    xticks.push(d.getTime()/1000)
+    // roll over year
+    if(d.getUTCMonth() == 11) {
+      d.setUTCFullYear(d.getUTCFullYear() + 1);
+      d.setUTCMonth(0);
+    }
+    // next month same year
+    else {
+      d.setUTCMonth(d.getUTCMonth() + 1);
+    }
+  }
   xticks = Array.from(new Set(xticks)).sort()
   return xticks
 }
@@ -187,4 +190,10 @@ export function xtickLabelFormatterWithYear(str:any) {
   var year = d.getUTCFullYear()
   var res = `${month} ${day} ${year}`
   return res
+}
+
+export function createLine(length: number, fill: string = '-') {
+  var s = ''
+  while(s.length < length) s = `${s}${fill}`
+  return s
 }
