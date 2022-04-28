@@ -68,7 +68,7 @@ function toFloat(swc: any) {
   return swc2;
 }
 
-const tierMap = ["F", "S", "A", "C"];
+const tierMap = ["F", "S", "A", "D"];
 
 function aggregateProtocols(swc: any, positions: any, series: any) {
   // fetch policyholders and policies

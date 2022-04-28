@@ -29,7 +29,7 @@ const CommunityChart: any = (props: any) => {
     if (d.Discord > max) max = d.Discord;
     if (d.Twitter > max) max = d.Twitter;
   }
-  let interval = 1000;
+  let interval = 2000;
   max = Math.ceil(max / interval) * interval;
   let ticks = range(0, max + 1, interval);
 

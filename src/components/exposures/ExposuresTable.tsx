@@ -13,7 +13,7 @@ const ExposuresTable: any = (props: any) => {
     rightPad('coverLimit', 12),
     rightPad('premiums/yr', 12),
     rightPad('tier', 4),
-    rightPad('rol', 4),
+    rightPad('rate', 4),
     rightPad('category', 16),
     rightPad('policies', 8)
   ].join(' | ')
