@@ -102,7 +102,7 @@ const UwpMainnet: any = (props: any) => {
         stroke="#c0c2c3"
       />
       <CartesianGrid strokeDasharray="3 3" />
-      <Tooltip content={<CustomTooltip valueDecimals={2}/>} />
+      <Tooltip content={<CustomTooltip valueDecimals={2} chartType={"stackedLine"}/>} />
       <Area
         type="monotone"
         dataKey="dai"
