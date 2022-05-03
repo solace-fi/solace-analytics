@@ -51,7 +51,7 @@ const UwpMainnet: any = (props: any) => {
   return (
     <AreaChart
       width={1200}
-      height={250}
+      height={300}
       data={history}
       margin={{ top: 10, right: 30, left: 30, bottom: 0 }}
     >
@@ -102,7 +102,7 @@ const UwpMainnet: any = (props: any) => {
         stroke="#c0c2c3"
       />
       <CartesianGrid strokeDasharray="3 3" />
-      <Tooltip content={<CustomTooltip valueDecimals={2}/>} />
+      <Tooltip content={<CustomTooltip valueDecimals={2} chartType={"stackedLine"}/>} />
       <Area
         type="monotone"
         dataKey="dai"

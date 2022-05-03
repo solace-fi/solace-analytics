@@ -64,7 +64,7 @@ function reformatData(data: any) {
     powerSum += owner.votePower
     tableData = `${tableData}\n${owner.name} | ${formatAmount(owner.votePower)}`
   })
-  tableData = `${tableData}\n---------------------------------------------------------\n                                     total | ${powerSum}`
+  tableData = `${tableData}\n---------------------------------------------------------\n                                     total | ${formatAmount(powerSum)}`
   let tableData2 = <pre>{tableData}</pre>
 
   //return [ownerArr, tableData2]

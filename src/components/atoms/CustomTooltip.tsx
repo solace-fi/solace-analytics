@@ -1,20 +1,23 @@
 import { leftPad, rightPad, tooltipFormatterNumber, tooltipLabelFormatterTime } from "@helpers";
 
 export function CustomTooltip(props: any) {
-  let { active, payload, label, valuePrefix, valueDecimals } = props
+  let { active, payload, label, valuePrefix, valueDecimals, chartType } = props
   if (!active || !payload || !payload.length) return null
+  // reverse order of stacked line charts
+  let payload2 = JSON.parse(JSON.stringify(payload))
+  if(chartType && chartType == "stackedLine") payload2.reverse()
   // precalculate text of each line
   let maxLengthName = 0
   let maxLengthValue = 0
   let formatter = tooltipFormatterNumber({ decimals: valueDecimals, prefix: valuePrefix })
-  for(var i = 0; i < payload.length; ++i) {
-    payload[i].nameText = payload[i].name;
-    if(payload[i].nameText.length > maxLengthName) maxLengthName = payload[i].nameText.length;
-    payload[i].valueText = formatter(payload[i].value)
-    if(payload[i].valueText.length > maxLengthValue) maxLengthValue = payload[i].valueText.length;
+  for(var i = 0; i < payload2.length; ++i) {
+    payload2[i].nameText = payload2[i].name;
+    if(payload2[i].nameText.length > maxLengthName) maxLengthName = payload2[i].nameText.length;
+    payload2[i].valueText = formatter(payload2[i].value)
+    if(payload2[i].valueText.length > maxLengthValue) maxLengthValue = payload2[i].valueText.length;
   }
-  for(var i = 0; i < payload.length; ++i) {
-    payload[i].rowText = `${rightPad(payload[i].nameText, maxLengthName)}  ${leftPad(payload[i].valueText, maxLengthValue)}`
+  for(var i = 0; i < payload2.length; ++i) {
+    payload2[i].rowText = `${rightPad(payload2[i].nameText, maxLengthName)}  ${leftPad(payload2[i].valueText, maxLengthValue)}`
   }
 
   return (
@@ -23,7 +26,7 @@ export function CustomTooltip(props: any) {
         {tooltipLabelFormatterTime(label)}
       </pre>
       <ul className="custom-tooltip-item-list">
-        {payload.map((item:any, key:any) => {
+        {payload2.map((item:any, key:any) => {
           return (
             <li key={key} className="custom-tooltip-item">
               <div className="custom-tooltip-item-wrapper">
