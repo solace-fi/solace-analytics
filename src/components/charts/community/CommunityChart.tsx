@@ -29,9 +29,9 @@ const CommunityChart: any = (props: any) => {
     if (d.Discord > max) max = d.Discord;
     if (d.Twitter > max) max = d.Twitter;
   }
-  let interval = 2000;
+  let interval = 2500;
   max = Math.ceil(max / interval) * interval;
-  let ticks = range(0, max + 1, interval);
+  let yticks = range(0, max + 1, interval);
 
   let history = data;
   let xticks = calculateMonthlyTicks(
@@ -58,7 +58,7 @@ const CommunityChart: any = (props: any) => {
       <YAxis
         tickFormatter={formatNumber({ decimals: 0 })}
         domain={[0, "5000"]}
-        ticks={ticks}
+        ticks={yticks}
         scale="linear"
         type="number"
         allowDataOverflow={false}

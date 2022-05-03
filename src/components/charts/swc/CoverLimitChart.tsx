@@ -123,9 +123,9 @@ function joinHistories(histories: any) {
 
   // y ticks
   let ymax = findMax(history);
-  let step = 50000;
-  ymax = Math.ceil(ymax / step) * step;
-  var yticks = range(0, ymax + 0.01, step);
+  let interval = 100000;
+  ymax = Math.ceil(ymax / interval) * interval;
+  var yticks = range(0, ymax + 0.01, interval);
 
   return [history, yticks];
 }
