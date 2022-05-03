@@ -52,7 +52,7 @@ const UwpAurora: any = (props: any) => {
   return (
     <AreaChart
       width={1200}
-      height={250}
+      height={300}
       data={history}
       margin={{ top: 10, right: 30, left: 30, bottom: 0 }}
     >
