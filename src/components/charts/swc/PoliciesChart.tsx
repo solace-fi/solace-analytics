@@ -126,7 +126,7 @@ function joinHistories(histories: any) {
   }
 
   // y ticks
-  let interval = 50;
+  let interval = 100;
   ymax = Math.ceil(ymax / interval) * interval;
   var yticks = range(0, ymax + 0.01, interval);
 

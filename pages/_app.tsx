@@ -9,7 +9,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [data, setData] = useState(emptyDict);
 
   useEffect(() => {
-    fetch("https://stats.solace.fi/analytics/")
+    fetch("https://stats-cache.solace.fi/analytics-stats.json")
       .then((data: any) => data.text())
       .then((data: any) => JSON.parse(data))
       .then((data: any) => {

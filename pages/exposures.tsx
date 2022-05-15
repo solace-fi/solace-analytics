@@ -20,12 +20,13 @@ const Exposures: NextPage = (props: any) => {
     !props ||
     !props.swc ||
     Object.keys(props.swc).length == 0 ||
-    !props.positions ||
+    (!props.positions && !props.positions_cleaned) ||
     !props.series
   )
     return <Loading />;
   let swc = toFloat(props.swc);
-  let protocols = aggregateProtocols(swc, props.positions, props.series);
+  let positions = props.positions_cleaned || props.positions;
+  let protocols = aggregateProtocols(swc, positions, props.series);
   let networks = ["ethereum", "polygon"];
   protocols = protocols.filter((protocol) =>
     networks.includes(protocol.network)
@@ -95,7 +96,7 @@ function aggregateProtocols(swc: any, positions: any, series: any) {
       console.log(`uncached policyholder ${policyholder}`);
       return;
     }
-    var pos = positions[policyholder].positions;
+    var pos = positions[policyholder].positions_cleaned || positions[policyholder].positions;
     pos.forEach((p: any) => {
       var pf = protocols.filter(
         (protocol: any) =>
