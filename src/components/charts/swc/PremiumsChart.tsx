@@ -20,8 +20,9 @@ import {
 
 const PremiumsChart: any = (props: any) => {
   var [history, yticks] = joinHistories({
-    "SWC V1": props.swc.swcv1.history,
-    "SWC V2": props.swc.swcv2.history,
+    "Ethereum": props.swc.ethereum_v1.history,
+    "Polygon": props.swc.polygon_v2.history,
+    "Fantom": props.swc.fantom_v2.history,
   });
 
   let xticks = calculateMonthlyTicks(

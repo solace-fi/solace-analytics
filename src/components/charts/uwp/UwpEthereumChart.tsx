@@ -15,7 +15,7 @@ import {
   xtickLabelFormatter,
 } from "./../../../helpers/index";
 
-const UwpMainnet: any = (props: any) => {
+const UwpEthereum: any = (props: any) => {
   // csv to json
   function reformatData(csv: any): any {
     var now = Date.now() / 1000;
@@ -163,4 +163,4 @@ const UwpMainnet: any = (props: any) => {
   );
 };
 
-export default UwpMainnet;
+export default UwpEthereum;

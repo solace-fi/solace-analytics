@@ -76,14 +76,19 @@ function aggregateProtocols(swc: any, positions: any, series: any) {
   // if the account has multiple policies across chains or products
   // then the last one to be written to the policyOf mapping will be used
   var policyOf: any = {}; // map account -> policy
-  swc.swcv1.policies.forEach((policy: any) => {
+  swc.ethereum_v1.policies.forEach((policy: any) => {
     policy.product = "swcv1";
     policy.network = "ethereum";
     policyOf[policy.policyholder] = policy;
   });
-  swc.swcv2.policies.forEach((policy: any) => {
+  swc.polygon_v2.policies.forEach((policy: any) => {
     policy.product = "swcv2";
     policy.network = "polygon";
+    policyOf[policy.policyholder] = policy;
+  });
+  swc.fantom_v2.policies.forEach((policy: any) => {
+    policy.product = "swcv2";
+    policy.network = "fantom";
     policyOf[policy.policyholder] = policy;
   });
   var policyholders: string[] = Object.keys(policyOf);

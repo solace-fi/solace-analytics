@@ -16,10 +16,10 @@ const Markets: NextPage = (props: any) => {
     <div className={styles.container}>
       <SectionTitle size="h4">SOLACE Price</SectionTitle>
       <PriceChart markets={markets} />
-      <SectionTitle size="h4">Swap Simulator</SectionTitle>
-      <SwapSimulator markets={markets} />
     </div>
   );
+  //<SectionTitle size="h4">Swap Simulator</SectionTitle>
+  //<SwapSimulator markets={markets} />
 };
 
 export default Markets;
@@ -27,9 +27,9 @@ export default Markets;
 const SwapSimulator: any = (props: any) => {
   let csv = props.markets["1"].split("\n");
   let latest = csv[csv.length - 2].split(",");
-  let mainnetReserveSolace = parseFloat(latest[4]);
-  let mainnetReserveUsd = parseFloat(latest[5]);
-  let mainnetSims = simulateUniswapV2(mainnetReserveSolace, mainnetReserveUsd);
+  let ethereumReserveSolace = parseFloat(latest[4]);
+  let ethereumReserveUsd = parseFloat(latest[5]);
+  let ethereumSims = simulateUniswapV2(ethereumReserveSolace, ethereumReserveUsd);
 
   csv = props.markets["1313161554"].split("\n");
   latest = csv[csv.length - 2].split(",");
@@ -44,38 +44,38 @@ const SwapSimulator: any = (props: any) => {
         amount means tokens transfer from you to pool.
       </p>
 
-      <SectionTitle size="h5">Mainnet Sushiswap</SectionTitle>
+      <SectionTitle size="h5">Ethereum Sushiswap</SectionTitle>
       <p className="my-2 font-semibold">{`This pool has ${Math.floor(
-        mainnetReserveSolace
+        ethereumReserveSolace
       ).toLocaleString()} SOLACE and ${Math.floor(
-        mainnetReserveUsd
+        ethereumReserveUsd
       ).toLocaleString()} USD`}</p>
       <p className="my-2 font-semibold">
         Removing/adding X USD will cost/give me Y SOLACE
       </p>
       <SolaceUsdSwapAmountSimulatorChart
-        solaceByUsd={mainnetSims.solaceByUsd}
+        solaceByUsd={ethereumSims.solaceByUsd}
       />
       <p className="my-2 font-semibold">
         Removing/adding X USD will change the SOLACE/USD price to Y
       </p>
       <SolaceUsdSwapPriceUsdSimulatorChart
-        priceByUsd={mainnetSims.priceByUsd}
-        price={mainnetSims.price}
+        priceByUsd={ethereumSims.priceByUsd}
+        price={ethereumSims.price}
       />
       <p className="my-2 font-semibold">
         Removing/adding X SOLACE will change the SOLACE/USD price to Y
       </p>
       <SolaceUsdSwapPriceSolaceSimulatorChart
-        priceBySolace={mainnetSims.priceBySolace}
-        price={mainnetSims.price}
+        priceBySolace={ethereumSims.priceBySolace}
+        price={ethereumSims.price}
       />
 
       <SectionTitle size="h5">Aurora Trisolaris</SectionTitle>
       <p className="my-2 font-semibold">{`This pool has ${Math.floor(
-        mainnetReserveSolace
+        ethereumReserveSolace
       ).toLocaleString()} SOLACE and ${Math.floor(
-        mainnetReserveUsd
+        ethereumReserveUsd
       ).toLocaleString()} USD of NEAR`}</p>
       <p className="my-2 font-semibold">
         Removing/adding X USD will cost/give me Y SOLACE

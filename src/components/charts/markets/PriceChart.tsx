@@ -20,7 +20,7 @@ import {
 const Price: any = (props: any) => {
   // transform data
   let dataPerChain: any = {};
-  dataPerChain["mainnet"] = reformatData(props.markets["1"], "mainnet");
+  dataPerChain["ethereum"] = reformatData(props.markets["1"], "ethereum");
   dataPerChain["aurora"] = reformatData(props.markets["1313161554"], "aurora");
   dataPerChain["polygon"] = reformatData(props.markets["137"], "polygon");
 
@@ -57,7 +57,7 @@ const Price: any = (props: any) => {
 
   // calculate y ticks
   let max = 0;
-  var keys2 = ["mainnet", "aurora", "polygon"];
+  var keys2 = ["ethereum", "aurora", "polygon"];
   for (var d of newData) {
     for (var k of keys2) {
       var v = parseFloat(d[k] + "");
@@ -123,7 +123,7 @@ const Price: any = (props: any) => {
       <Tooltip content={<CustomTooltip valuePrefix="$" valueDecimals={5}/>} />
       <Line
         type="monotone"
-        dataKey="mainnet"
+        dataKey="ethereum"
         stroke="#ff4400"
         dot={false}
         strokeWidth={1}

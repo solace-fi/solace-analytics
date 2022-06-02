@@ -27,10 +27,13 @@ const Policies: NextPage = (props: any) => {
       <CoverLimitChart swc={swc} />
       <br />
       <SectionTitle size="h3">SWC Policies Ethereum</SectionTitle>
-      <PolicyTable policies={swc.swcv1.policies} />
+      <PolicyTable policies={swc.ethereum_v1.policies} />
       <br />
       <SectionTitle size="h3">SWC Policies Polygon</SectionTitle>
-      <PolicyTable policies={swc.swcv2.policies} />
+      <PolicyTable policies={swc.polygon_v2.policies} />
+      <br />
+      <SectionTitle size="h3">SWC Policies Fantom</SectionTitle>
+      <PolicyTable policies={swc.fantom_v2.policies} />
       <br />
       <br />
       <br />
