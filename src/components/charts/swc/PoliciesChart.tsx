@@ -20,8 +20,9 @@ import {
 
 const PoliciesChart: any = (props: any) => {
   var [history, yticks] = joinHistories({
-    "SWC V1": props.swc.swcv1.history,
-    "SWC V2": props.swc.swcv2.history,
+    "Ethereum": props.swc.ethereum_v1.history,
+    "Polygon": props.swc.polygon_v2.history,
+    "Fantom": props.swc.fantom_v2.history,
   });
 
   let xticks = calculateMonthlyTicks(
@@ -58,15 +59,22 @@ const PoliciesChart: any = (props: any) => {
       <Tooltip content={<CustomTooltip valueDecimals={0}/>} />
       <Line
         type="monotone"
-        dataKey="SWC V1"
-        stroke="#ff5500"
+        dataKey="Ethereum"
+        stroke="#ff4400"
         dot={false}
         strokeWidth={1}
       />
       <Line
         type="monotone"
-        dataKey="SWC V2"
-        stroke="#0055ff"
+        dataKey="Polygon"
+        stroke="#8247e5"
+        dot={false}
+        strokeWidth={1}
+      />
+      <Line
+        type="monotone"
+        dataKey="Fantom"
+        stroke="#3845f9"
         dot={false}
         strokeWidth={1}
       />
@@ -126,7 +134,7 @@ function joinHistories(histories: any) {
   }
 
   // y ticks
-  let interval = 100;
+  let interval = 200;
   ymax = Math.ceil(ymax / interval) * interval;
   var yticks = range(0, ymax + 0.01, interval);
 

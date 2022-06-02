@@ -6,6 +6,7 @@ import UwpAllChart from "./../src/components/charts/uwp/UwpAllChart";
 import UwpMainnetChart from "./../src/components/charts/uwp/UwpMainnetChart";
 import UwpAuroraChart from "./../src/components/charts/uwp/UwpAuroraChart";
 import UwpPolygonChart from "./../src/components/charts/uwp/UwpPolygonChart";
+import UwpFantomChart from "./../src/components/charts/uwp/UwpFantomChart";
 import SectionTitle from "@components/atoms/SectionTitle";
 
 const Uwp: NextPage = (props: any) => {
@@ -25,6 +26,9 @@ const Uwp: NextPage = (props: any) => {
       <br />
       <SectionTitle size="h4">Polygon</SectionTitle>
       <UwpPolygonChart csv={uwp["137"]} />
+      <br />
+      <SectionTitle size="h4">Fantom</SectionTitle>
+      <UwpFantomChart csv={uwp["250"]} />
       <br />
       <br />
       <br />

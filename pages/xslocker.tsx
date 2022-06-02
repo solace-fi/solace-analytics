@@ -22,7 +22,7 @@ const XsLocker: NextPage = (props: any) => {
 export default XsLocker;
 
 const XsLockerTable: any = (props: any) => {
-  const CHAIN_IDS = [1, 1313161554, 137]; // mainnet, aurora, polygon
+  const CHAIN_IDS = [1, 1313161554, 137, 250]; // ethereum, aurora, polygon, fantom
   const CHAIN_NAMES: any = {
     "1": (
       <a href="https://etherscan.io/address/0x501Ace47c5b0C2099C4464f681c3fa2ECD3146C1">
@@ -37,6 +37,11 @@ const XsLockerTable: any = (props: any) => {
     "137": (
       <a href="https://polygonscan.com/address/0x501Ace47c5b0C2099C4464f681c3fa2ECD3146C1">
         <SectionTitle size="h3">Polygon</SectionTitle>
+      </a>
+    ),
+    "250": (
+      <a href="https://ftmscan.com/address/0x501Ace47c5b0C2099C4464f681c3fa2ECD3146C1">
+        <SectionTitle size="h3">Fantom</SectionTitle>
       </a>
     ),
   };
