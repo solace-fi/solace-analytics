@@ -16,7 +16,7 @@ import {
   range,
 } from "./../../../helpers/index";
 
-const UwpMainnet: any = (props: any) => {
+const UwpEthereum: any = (props: any) => {
   let history = joinData(props.uwp)
 
   let xticks = calculateMonthlyTicks(
@@ -197,4 +197,4 @@ function sumArr(arr: number[]): number {
   return s
 }
 
-export default UwpMainnet;
+export default UwpEthereum;
