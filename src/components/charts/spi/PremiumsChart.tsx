@@ -20,9 +20,10 @@ import {
 
 const PremiumsChart: any = (props: any) => {
   var [history, yticks] = joinHistories({
-    "Ethereum": props.swc.ethereum_v1.history,
-    "Polygon": props.swc.polygon_v2.history,
-    "Fantom": props.swc.fantom_v2.history,
+    "Ethereum": props.spi.ethereum_v3.history,
+    "Aurora": props.spi.aurora_v3.history,
+    "Polygon": props.spi.polygon_v3.history,
+    "Fantom": props.spi.fantom_v3.history,
   });
 
   let xticks = calculateMonthlyTicks(
@@ -67,13 +68,6 @@ const PremiumsChart: any = (props: any) => {
       <Line
         type="monotone"
         dataKey="sum.premiumsCharged"
-        stroke="#00ff00"
-        dot={false}
-        strokeWidth={1}
-      />
-      <Line
-        type="monotone"
-        dataKey="sum.rewardPointsEarned"
         stroke="#0000ff"
         dot={false}
         strokeWidth={1}
@@ -87,7 +81,7 @@ export default PremiumsChart;
 function joinHistories(histories: any) {
   var history: any = [];
   var keys = Object.keys(histories);
-  var datakeys = ["depositsMade", "premiumsCharged", "rewardPointsEarned"];
+  var datakeys = ["depositsMade", "premiumsCharged"];
   var frontierHolder: any = zerosDict2D(keys, datakeys);
   var indices: any = zerosDict(keys);
 
@@ -136,7 +130,7 @@ function joinHistories(histories: any) {
   }
 
   // y ticks
-  let interval = 10000;
+  let interval = 1000;
   let ymax = findMax(history);
   ymax = Math.ceil(ymax / interval) * interval;
   var yticks = range(0, ymax + 0.01, interval);

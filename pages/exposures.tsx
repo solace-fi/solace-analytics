@@ -18,22 +18,22 @@ import SectionTitle from "@components/atoms/SectionTitle";
 const Exposures: NextPage = (props: any) => {
   if (
     !props ||
-    !props.swc ||
-    Object.keys(props.swc).length == 0 ||
+    !props.spi ||
+    Object.keys(props.spi).length == 0 ||
     (!props.positions && !props.positions_cleaned) ||
     !props.series
   )
     return <Loading />;
-  let swc = toFloat(props.swc);
+  let spi = toFloat(props.spi);
   let positions = props.positions_cleaned || props.positions;
-  let protocols = aggregateProtocols(swc, positions, props.series);
+  let protocols = aggregateProtocols(spi, positions, props.series);
   let networks = ["ethereum", "polygon"];
   protocols = protocols.filter((protocol) =>
     networks.includes(protocol.network)
   );
   return (
     <div className={styles.container}>
-      <SectionTitle size="h3">SWC Exposures by Protocol</SectionTitle>
+      <SectionTitle size="h3">SPI Exposures by Protocol</SectionTitle>
       <p>Note: positions are cached and may not reflect current state</p>
       <p>Note: premiums are calculated by policy, not protocol. This view provides an estimate. See <Link href="/policies"><a>policies</a></Link> for more accurate figures</p><br/>
       <ExposuresTable protocols={protocols} />
@@ -47,12 +47,12 @@ const Exposures: NextPage = (props: any) => {
 
 export default Exposures;
 
-function toFloat(swc: any) {
-  var swc2 = JSON.parse(JSON.stringify(swc));
-  var keys = Object.keys(swc2);
+function toFloat(spi: any) {
+  var spi2 = JSON.parse(JSON.stringify(spi));
+  var keys = Object.keys(spi2);
   // transform to float
   for (var k of keys) {
-    var history = swc2[k].history;
+    var history = spi2[k].history;
     for (var h of history) {
       for (var p of [
         "coverLimit",
@@ -66,28 +66,33 @@ function toFloat(swc: any) {
       }
     }
   }
-  return swc2;
+  return spi2;
 }
 
 const tierMap = ["F", "S", "A", "D"];
 
-function aggregateProtocols(swc: any, positions: any, series: any) {
+function aggregateProtocols(spi: any, positions: any, series: any) {
   // fetch policyholders and policies
   // if the account has multiple policies across chains or products
   // then the last one to be written to the policyOf mapping will be used
   var policyOf: any = {}; // map account -> policy
-  swc.ethereum_v1.policies.forEach((policy: any) => {
-    policy.product = "swcv1";
+  spi.ethereum_v3.policies.forEach((policy: any) => {
+    policy.product = "SPI V3";
     policy.network = "ethereum";
     policyOf[policy.policyholder] = policy;
   });
-  swc.polygon_v2.policies.forEach((policy: any) => {
-    policy.product = "swcv2";
+  spi.aurora_v3.policies.forEach((policy: any) => {
+    policy.product = "SPI V3";
     policy.network = "polygon";
     policyOf[policy.policyholder] = policy;
   });
-  swc.fantom_v2.policies.forEach((policy: any) => {
-    policy.product = "swcv2";
+  spi.polygon_v3.policies.forEach((policy: any) => {
+    policy.product = "SPI V3";
+    policy.network = "polygon";
+    policyOf[policy.policyholder] = policy;
+  });
+  spi.fantom_v3.policies.forEach((policy: any) => {
+    policy.product = "SPI V3";
     policy.network = "fantom";
     policyOf[policy.policyholder] = policy;
   });
