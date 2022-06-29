@@ -36,6 +36,7 @@ const UwpPolygon: any = (props: any) => {
         wbtc: (row[10] - 0) * (row[14] - 0),
         matic: (row[7] - 0 + (row[8] - 0)) * (row[15] - 0),
         guni: (row[11] - 0) * (row[17] - 0),
+        bpt: (row[18] - 0) * (row[19] - 0),
       });
     }
     return output;
@@ -86,6 +87,10 @@ const UwpPolygon: any = (props: any) => {
         <linearGradient id="colorGuni" x1="0" y1="0" x2="0" y2="1">
           <stop offset="5%" stopColor="#7dc781" stopOpacity={0.8} />
           <stop offset="95%" stopColor="#7dc781" stopOpacity={0} />
+        </linearGradient>
+        <linearGradient id="colorBpt" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="5%" stopColor="#000000" stopOpacity={0.8} />
+          <stop offset="95%" stopColor="#000000" stopOpacity={0} />
         </linearGradient>
       </defs>
       <XAxis
@@ -168,6 +173,14 @@ const UwpPolygon: any = (props: any) => {
         stroke="#7dc781"
         fillOpacity={1}
         fill="url(#colorGuni)"
+        stackId="1"
+      />
+      <Area
+        type="monotone"
+        dataKey="bpt"
+        stroke="#000000"
+        fillOpacity={1}
+        fill="url(#colorBpt)"
         stackId="1"
       />
     </AreaChart>

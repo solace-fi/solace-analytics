@@ -35,6 +35,7 @@ const UwpFantom: any = (props: any) => {
         eth: ((row[7] - 0) * (row[12] - 0)),
         wbtc: ((row[8] - 0) * (row[13] - 0)),
         ftm: ((row[9] - 0 + (row[10] - 0)) * (row[14] - 0)),
+        bpt: ( (row[15] - 0) * (row[16] - 0))
       });
     }
     return output;
@@ -73,7 +74,7 @@ const UwpFantom: any = (props: any) => {
         <linearGradient id="colorEth" x1="0" y1="0" x2="0" y2="1">
           <stop offset="5%" stopColor="#89eacb" stopOpacity={0.8} />
           <stop offset="95%" stopColor="#89eacb" stopOpacity={0} />
-        </linearGradient>
+        </linearGradient>,balance SOLACE-ETH BALANCER,price SOLACE-ETH BALANCER
         <linearGradient id="colorWbtc" x1="0" y1="0" x2="0" y2="1">
           <stop offset="5%" stopColor="#fb748e" stopOpacity={0.8} />
           <stop offset="95%" stopColor="#fb748e" stopOpacity={0} />
@@ -81,6 +82,10 @@ const UwpFantom: any = (props: any) => {
         <linearGradient id="colorFtm" x1="0" y1="0" x2="0" y2="1">
           <stop offset="5%" stopColor="#3845f9" stopOpacity={0.8} />
           <stop offset="95%" stopColor="#3845f9" stopOpacity={0} />
+        </linearGradient>
+        <linearGradient id="colorBpt" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="5%" stopColor="#000000" stopOpacity={0.8} />
+          <stop offset="95%" stopColor="#000000" stopOpacity={0} />
         </linearGradient>
       </defs>
       <XAxis
@@ -155,6 +160,14 @@ const UwpFantom: any = (props: any) => {
         stroke="#3845f9"
         fillOpacity={1}
         fill="url(#colorFtm)"
+        stackId="1"
+      />
+      <Area
+        type="monotone"
+        dataKey="bpt"
+        stroke="#000000"
+        fillOpacity={1}
+        fill="url(#colorBpt)"
         stackId="1"
       />
     </AreaChart>

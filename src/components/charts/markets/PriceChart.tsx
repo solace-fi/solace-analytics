@@ -17,12 +17,14 @@ import {
   xtickLabelFormatter,
 } from "./../../../helpers/index";
 
-const Price: any = (props: any) => {
+const PriceChart: any = (props: any) => {
+  props.markets["137"] = reformatPolygon(props.markets["137"])
   // transform data
   let dataPerChain: any = {};
   dataPerChain["ethereum"] = reformatData(props.markets["1"], "ethereum");
   dataPerChain["aurora"] = reformatData(props.markets["1313161554"], "aurora");
   dataPerChain["polygon"] = reformatData(props.markets["137"], "polygon");
+  dataPerChain["fantom"] = reformatData(props.markets["250"], "fantom");
 
   let keys = Object.keys(dataPerChain);
   let newData = [];
@@ -57,7 +59,7 @@ const Price: any = (props: any) => {
 
   // calculate y ticks
   let max = 0;
-  var keys2 = ["ethereum", "aurora", "polygon"];
+  var keys2 = ["ethereum", "aurora", "polygon", "fantom"];
   for (var d of newData) {
     for (var k of keys2) {
       var v = parseFloat(d[k] + "");
@@ -73,6 +75,24 @@ const Price: any = (props: any) => {
     history[0].timestamp,
     history[history.length - 1].timestamp
   );
+
+  // polygon has uni v3 and balancer markets
+  // use balancer as default, fallback to uni v3
+  function reformatPolygon(csv: any): any {
+    let rowsIn = csv.trim().split('\n')
+    if(rowsIn[0].split(',').length < 7) return csv
+    let rowsOut = ['block number,block timestamp,block timestring,price solace/usd,reserve solace,reserve usd']
+    for(var i = 1; i < rowsIn.length; ++i) {
+      let row = rowsIn[i].split(',');
+      let [price, sRes, uRes] = ( (parseFloat(row[6]) == 0)
+        ? [row[3], row[4], row[5]]
+        : [row[6], row[7], row[8]]
+      );
+      let rowOut = [row[0], row[1], row[2], price, sRes, uRes].join(',');
+      rowsOut.push(rowOut)
+    }
+    return rowsOut.join('\n')
+  }
 
   // csv to json
   function reformatData(csv: any, key: string): any {
@@ -142,8 +162,15 @@ const Price: any = (props: any) => {
         dot={false}
         strokeWidth={1}
       />
+      <Line
+        type="monotone"
+        dataKey="fantom"
+        stroke="#3845f9"
+        dot={false}
+        strokeWidth={1}
+      />
     </LineChart>
   );
 };
 
-export default Price;
+export default PriceChart;
