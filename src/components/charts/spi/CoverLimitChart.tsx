@@ -21,9 +21,10 @@ import {
 
 const CoverLimitChart: any = (props: any) => {
   var [history, yticks] = joinHistories({
-    "Ethereum": props.swc.ethereum_v1.history,
-    "Polygon": props.swc.polygon_v2.history,
-    "Fantom": props.swc.fantom_v2.history,
+    "Ethereum": props.spi.ethereum_v3.history,
+    "Aurora": props.spi.aurora_v3.history,
+    "Polygon": props.spi.polygon_v3.history,
+    "Fantom": props.spi.fantom_v3.history,
   });
 
   let xticks = calculateMonthlyTicks(

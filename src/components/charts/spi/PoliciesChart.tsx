@@ -20,9 +20,10 @@ import {
 
 const PoliciesChart: any = (props: any) => {
   var [history, yticks] = joinHistories({
-    "Ethereum": props.swc.ethereum_v1.history,
-    "Polygon": props.swc.polygon_v2.history,
-    "Fantom": props.swc.fantom_v2.history,
+    "Ethereum": props.spi.ethereum_v3.history,
+    "Aurora": props.spi.aurora_v3.history,
+    "Polygon": props.spi.polygon_v3.history,
+    "Fantom": props.spi.fantom_v3.history,
   });
 
   let xticks = calculateMonthlyTicks(
@@ -61,6 +62,13 @@ const PoliciesChart: any = (props: any) => {
         type="monotone"
         dataKey="Ethereum"
         stroke="#ff4400"
+        dot={false}
+        strokeWidth={1}
+      />
+      <Line
+        type="monotone"
+        dataKey="Aurora"
+        stroke="#70d44b"
         dot={false}
         strokeWidth={1}
       />

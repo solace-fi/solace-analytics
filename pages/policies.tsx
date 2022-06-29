@@ -5,35 +5,38 @@ const BN = ethers.BigNumber;
 const formatUnits = ethers.utils.formatUnits;
 
 import Loading from "./../src/components/Loading";
-import PoliciesChart from "./../src/components/charts/swc/PoliciesChart";
-import PremiumsChart from "./../src/components/charts/swc/PremiumsChart";
-import CoverLimitChart from "./../src/components/charts/swc/CoverLimitChart";
+import PoliciesChart from "./../src/components/charts/spi/PoliciesChart";
+import PremiumsChart from "./../src/components/charts/spi/PremiumsChart";
+import CoverLimitChart from "./../src/components/charts/spi/CoverLimitChart";
 import { leftPad, formatNumber } from "./../src/helpers/index";
 import SectionTitle from "@components/atoms/SectionTitle";
 
 const Policies: NextPage = (props: any) => {
-  if (!props || !props.swc || Object.keys(props.swc).length == 0)
+  if (!props || !props.spi || Object.keys(props.spi).length == 0)
     return <Loading />;
-  const swc = toFloat(props.swc);
+  const spi = toFloat(props.spi);
   return (
     <div className={styles.container}>
-      <SectionTitle size="h3">SWC Policies</SectionTitle>
-      <PoliciesChart swc={swc} />
+      <SectionTitle size="h3">SPI Policies</SectionTitle>
+      <PoliciesChart spi={spi} />
       <br />
-      <SectionTitle size="h3">SWC Premiums</SectionTitle>
-      <PremiumsChart swc={swc} />
+      <SectionTitle size="h3">SPI Premiums</SectionTitle>
+      <PremiumsChart spi={spi} />
       <br />
-      <SectionTitle size="h3">SWC Cover Limit</SectionTitle>
-      <CoverLimitChart swc={swc} />
+      <SectionTitle size="h3">SPI Cover Limit</SectionTitle>
+      <CoverLimitChart spi={spi} />
       <br />
-      <SectionTitle size="h3">SWC Policies Ethereum</SectionTitle>
-      <PolicyTable policies={swc.ethereum_v1.policies} />
+      <SectionTitle size="h3">SPI Policies Ethereum</SectionTitle>
+      <PolicyTable policies={spi.ethereum_v3.policies} />
       <br />
-      <SectionTitle size="h3">SWC Policies Polygon</SectionTitle>
-      <PolicyTable policies={swc.polygon_v2.policies} />
+      <SectionTitle size="h3">SPI Policies Aurora</SectionTitle>
+      <PolicyTable policies={spi.aurora_v3.policies} />
       <br />
-      <SectionTitle size="h3">SWC Policies Fantom</SectionTitle>
-      <PolicyTable policies={swc.fantom_v2.policies} />
+      <SectionTitle size="h3">SPI Policies Polygon</SectionTitle>
+      <PolicyTable policies={spi.polygon_v3.policies} />
+      <br />
+      <SectionTitle size="h3">SPI Policies Fantom</SectionTitle>
+      <PolicyTable policies={spi.fantom_v3.policies} />
       <br />
       <br />
       <br />
@@ -44,18 +47,17 @@ const Policies: NextPage = (props: any) => {
 
 export default Policies;
 
-function toFloat(swc: any) {
-  var swc2 = JSON.parse(JSON.stringify(swc));
-  var keys = Object.keys(swc2);
+function toFloat(spi: any) {
+  var spi2 = JSON.parse(JSON.stringify(spi));
+  var keys = Object.keys(spi2);
   // transform to float
   for (var k of keys) {
-    var history = swc2[k].history;
+    var history = spi2[k].history;
     for (var h of history) {
       for (var p of [
         "coverLimit",
         "depositsMade",
         "premiumsCharged",
-        "rewardPointsEarned",
       ]) {
         if (h.hasOwnProperty(p)) {
           h[p] = formatUnits(h[p], 18);
@@ -63,19 +65,18 @@ function toFloat(swc: any) {
       }
     }
   }
-  return swc2;
+  return spi2;
 }
 
 const PolicyTable: any = (props: any) => {
-  var s = "policyID | policyholder                               | coverLimit |depositsMade| premiumsCharged | referralsEarned\n-------------------------------------------------------------------------------------------------------------------\n"
+  var s = "policyID | policyholder                               | coverLimit |depositsMade| premiumsCharged\n-------------------------------------------------------------------------------------------------\n"
   var fn = formatNumber({ decimals: 0 })
   props.policies.forEach((policy: any) => {
     var policyID = leftPad(policy.policyID, 8, ' ')
     var coverLimit = leftPad(fn(formatUnits(policy.coverLimit, 18)), 10, ' ')
     var depositsMade = leftPad(fn(formatUnits(policy.depositsMade, 18)), 10, ' ')
     var premiumsCharged = leftPad(fn(formatUnits(policy.premiumsCharged, 18)), 15, ' ')
-    var referralsEarned = leftPad(fn(formatUnits(policy.rewardPointsEarned, 18)), 15, ' ')
-    s = `${s}${policyID} | ${policy.policyholder} | ${coverLimit} | ${depositsMade} | ${premiumsCharged} | ${referralsEarned}\n`
+    s = `${s}${policyID} | ${policy.policyholder} | ${coverLimit} | ${depositsMade} | ${premiumsCharged}\n`
   });
   return <pre>{s}</pre>;
 };
