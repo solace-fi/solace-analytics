@@ -83,7 +83,7 @@ function aggregateProtocols(spi: any, positions: any, series: any) {
   });
   spi.aurora_v3.policies.forEach((policy: any) => {
     policy.product = "SPI V3";
-    policy.network = "polygon";
+    policy.network = "aurora";
     policyOf[policy.policyholder] = policy;
   });
   spi.polygon_v3.policies.forEach((policy: any) => {
