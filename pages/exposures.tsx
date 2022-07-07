@@ -27,7 +27,7 @@ const Exposures: NextPage = (props: any) => {
   let spi = toFloat(props.spi);
   let positions = props.positions_cleaned || props.positions;
   let protocols = aggregateProtocols(spi, positions, props.series);
-  let networks = ["ethereum", "polygon"];
+  let networks = ["ethereum", "aurora", "polygon", "fantom"];
   protocols = protocols.filter((protocol) =>
     networks.includes(protocol.network)
   );
