@@ -35,7 +35,7 @@ const UwpFantom: any = (props: any) => {
         eth: ((row[7] - 0) * (row[12] - 0)),
         wbtc: ((row[8] - 0) * (row[13] - 0)),
         ftm: ((row[9] - 0 + (row[10] - 0)) * (row[14] - 0)),
-        bpt: ( (row[15] - 0) * (row[16] - 0))
+        bpt: ( (row[16] - 0) * (row[17] - 0))
       });
     }
     return output;
