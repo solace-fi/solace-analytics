@@ -20,13 +20,13 @@ const UwpFantom: any = (props: any) => {
   function reformatData(csv: any): any {
     var now = Date.now() / 1000;
     var start = now - 60 * 60 * 24 * 90; // filter out data points > 3 months ago
-    var rows = csv.split("\n");
+    var rows = csv.trim().split("\n");
     var output = [];
-    for (var i = 1; i < rows.length - 1; ++i) {
+    for (var i = 1; i < rows.length; ++i) {
       var row = rows[i].split(",");
       var timestamp = row[1] - 0;
       if (timestamp < start) continue;
-      output.push({
+      let row2:any = {
         timestamp: row[1],
         dai: row[3] - 0,
         usdc: row[4] - 0,
@@ -35,8 +35,11 @@ const UwpFantom: any = (props: any) => {
         eth: ((row[7] - 0) * (row[12] - 0)),
         wbtc: ((row[8] - 0) * (row[13] - 0)),
         ftm: ((row[9] - 0 + (row[10] - 0)) * (row[14] - 0)),
-        bpt: ( (row[15] - 0) * (row[16] - 0))
-      });
+        bpt: ( (row[16] - 0) * (row[17] - 0))
+      }
+      let keys = ['dai', 'usdc', 'usdt', 'frax', 'eth', 'wbtc', 'ftm', 'bpt'];
+      let inf = keys.filter(key => row2[key] == Infinity).length > 0;
+      if(!inf) output.push(row2);
     }
     return output;
   }
